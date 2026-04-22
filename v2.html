@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Some Odd Road — Literary travel writing. Weekly dispatches from the roads less mapped.">
+    <title>Some Odd Road — Lost on some odd road.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAF7F2;
+            --bg-warm: #F3EDE4;
+            --bg-dark: #1C1917;
+            --text: #2C2825;
+            --text-secondary: #6B6560;
+            --text-muted: #9E9790;
+            --accent: #C4572A;
+            --accent-hover: #A8441E;
+            --border: #E5DFD6;
+            --serif: 'Newsreader', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text); font-family: var(--serif); line-height: 1.7; overflow-x: hidden; }
+        ::selection { background: var(--accent); color: #fff; }
+        a { color: inherit; text-decoration: none; }
+        .shell { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
+
+        /* ── FIXED NAV ── */
+        .site-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.5rem 2.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            mix-blend-mode: difference;
+            transition: opacity 0.4s ease;
+        }
+        .nav-brand {
+            font-family: var(--sans); font-size: 0.68rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 3px; color: #fff;
+        }
+        .nav-links {
+            display: flex; gap: 2rem; list-style: none;
+            font-family: var(--sans); font-size: 0.68rem;
+            text-transform: uppercase; letter-spacing: 1.5px; color: #fff;
+        }
+        .nav-links a { opacity: 0.7; transition: opacity 0.3s; }
+        .nav-links a:hover { opacity: 1; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative; height: 100vh; overflow: hidden;
+            display: flex; align-items: flex-end;
+            background: var(--bg-dark);
+        }
+        .hero-img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.5; filter: grayscale(30%) contrast(110%);
+            animation: slowZoom 25s ease-in-out infinite alternate;
+        }
+        @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(28,25,23,0.95) 0%, rgba(28,25,23,0.3) 50%, transparent 100%);
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            padding: 0 3rem 5rem; max-width: 800px;
+        }
+        .hero-rule {
+            width: 40px; height: 2px; background: var(--accent);
+            border: none; margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-family: var(--serif); font-weight: 300; font-style: italic;
+            font-size: clamp(3rem, 7vw, 5rem);
+            line-height: 1.1; letter-spacing: -0.02em;
+            color: #F0EDE8; margin-bottom: 1.25rem;
+        }
+        .hero-sub {
+            font-family: var(--sans); font-size: 0.85rem;
+            color: rgba(240,237,232,0.5); letter-spacing: 0.5px;
+            max-width: 440px; line-height: 1.8;
+        }
+        .hero-scroll {
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            z-index: 2; font-family: var(--sans); font-size: 0.6rem;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: rgba(255,255,255,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+        /* ── FEED SECTION ── */
+        .feed-section { padding: 4rem 0 2rem; }
+        .feed-label {
+            font-family: var(--sans); font-size: 0.62rem;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: var(--text-muted); margin-bottom: 2rem;
+        }
+        .divider { border: none; height: 1px; background: var(--border); margin: 0; }
+
+        /* ── FEATURED DISPATCH (expanded first story) ── */
+        .featured {
+            padding: 3rem 0 4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .featured-meta {
+            display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+            font-family: var(--sans); font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 1rem;
+        }
+        .featured-meta .loc { color: var(--accent); font-weight: 500; }
+        .featured-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+
+        .featured h2 {
+            font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 400; line-height: 1.2; letter-spacing: -0.015em;
+            margin-bottom: 2rem;
+        }
+
+        .featured-hero-img {
+            width: 100%; height: 400px; object-fit: cover;
+            margin-bottom: 0.5rem;
+            filter: grayscale(15%);
+        }
+        .img-caption {
+            font-family: var(--sans); font-size: 0.65rem;
+            color: var(--text-muted); letter-spacing: 0.5px;
+            margin-bottom: 2.5rem; font-style: italic;
+        }
+
+        /* Dispatch prose */
+        .dispatch-body p {
+            font-size: 1.15rem; line-height: 1.8;
+            color: var(--text-secondary); margin-bottom: 1.8rem;
+            max-width: 640px;
+        }
+        .dispatch-body p:first-child::first-letter {
+            font-size: 3.8rem; float: left; line-height: 0.8;
+            margin: 0.1em 0.15em 0 0; font-weight: 400;
+            color: var(--text);
+        }
+
+        /* Pull quote */
+        .pull-quote {
+            margin: 3rem 0; padding: 2rem 0 2rem 2rem;
+            border-left: 2px solid var(--accent);
+            font-family: var(--serif); font-style: italic;
+            font-size: 1.4rem; line-height: 1.5;
+            color: var(--text); max-width: 560px;
+        }
+
+        /* Coffee price callout */
+        .price-card {
+            background: var(--bg-warm); padding: 1.8rem 2rem;
+            margin: 2.5rem 0; display: flex; gap: 1.5rem; align-items: center;
+        }
+        .price-icon { font-size: 1.8rem; flex-shrink: 0; }
+        .price-card .label {
+            font-family: var(--sans); font-size: 0.62rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-muted); margin-bottom: 0.25rem;
+        }
+        .price-card .value {
+            font-family: var(--serif); font-size: 1.1rem; color: var(--text);
+        }
+        .price-card .value em { color: var(--accent); }
+
+        /* Dispatch end */
+        .dispatch-end {
+            display: flex; align-items: center; gap: 1rem;
+            padding-top: 1.5rem; margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: var(--sans); font-size: 0.68rem;
+            color: var(--text-muted); letter-spacing: 0.5px;
+        }
+        .dispatch-end .ornament { color: var(--accent); font-size: 1rem; }
+
+        /* ── COMPACT STORY CARDS ── */
+        .story-card {
+            padding: 2.5rem 0; border-bottom: 1px solid var(--border);
+            cursor: pointer; transition: opacity 0.3s;
+        }
+        .story-card:hover { opacity: 0.7; }
+        .story-card:last-child { border-bottom: none; }
+
+        .sc-meta {
+            display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+            font-family: var(--sans); font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 0.6rem;
+        }
+        .sc-meta .loc { color: var(--accent); font-weight: 500; }
+        .sc-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+
+        .story-card h3 {
+            font-family: var(--serif); font-size: 1.6rem;
+            font-weight: 400; line-height: 1.3; margin-bottom: 0.8rem;
+        }
+        .sc-excerpt {
+            font-size: 1.05rem; line-height: 1.7;
+            color: var(--text-secondary); max-width: 580px; margin-bottom: 1rem;
+        }
+        .sc-footer {
+            font-family: var(--sans); font-size: 0.65rem;
+            color: var(--text-muted); display: flex; align-items: center; gap: 1rem;
+        }
+        .sc-tag {
+            padding: 0.15rem 0.5rem; border: 1px solid var(--border);
+            font-size: 0.58rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .sc-read { color: var(--accent); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ── SUBSCRIBE ── */
+        .subscribe {
+            background: var(--bg-dark); color: #F0EDE8;
+            padding: 5rem 0; text-align: center;
+        }
+        .subscribe h3 {
+            font-family: var(--serif); font-style: italic; font-weight: 300;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            line-height: 1.3; margin-bottom: 1rem;
+        }
+        .subscribe p {
+            font-family: var(--sans); font-size: 0.82rem;
+            color: rgba(240,237,232,0.5); max-width: 420px;
+            margin: 0 auto 2rem; line-height: 1.8;
+        }
+        .subscribe .hl { font-style: italic; color: var(--accent); }
+        .sub-form {
+            display: flex; gap: 0; max-width: 400px; margin: 0 auto;
+        }
+        .sub-form input {
+            flex: 1; padding: 0.85rem 1.2rem;
+            font-family: var(--sans); font-size: 0.8rem;
+            border: 1px solid #333; border-right: none;
+            background: transparent; color: #F0EDE8; outline: none;
+            transition: border-color 0.3s;
+        }
+        .sub-form input:focus { border-color: var(--accent); }
+        .sub-form input::placeholder { color: #555; }
+        .sub-form button {
+            padding: 0.85rem 1.8rem; font-family: var(--sans);
+            font-size: 0.65rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 2px;
+            background: var(--accent); color: #fff;
+            border: 1px solid var(--accent); cursor: pointer;
+            transition: background 0.3s;
+        }
+        .sub-form button:hover { background: var(--accent-hover); }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            padding: 3rem 0; text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .f-brand {
+            font-family: var(--sans); font-size: 0.62rem;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: var(--text-muted); margin-bottom: 0.4rem;
+        }
+        .f-note {
+            font-family: var(--serif); font-size: 0.85rem;
+            font-style: italic; color: var(--text-muted);
+        }
+
+        /* ── ANIMATIONS ── */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .shell { padding: 0 1.25rem; }
+            .hero-content { padding: 0 1.5rem 4rem; }
+            .featured-hero-img { height: 260px; }
+            .pull-quote { font-size: 1.15rem; padding-left: 1.2rem; }
+            .price-card { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+            .sub-form { flex-direction: column; }
+            .sub-form input { border-right: 1px solid #333; border-bottom: none; }
+            .nav-links { gap: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Nav ── -->
+    <nav class="site-nav" id="site-nav">
+        <a href="/" class="nav-brand">Some Odd Road</a>
+        <ul class="nav-links">
+            <li><a href="#stories">Stories</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+        <img class="hero-img"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=80"
+            alt="Mountain road disappearing into mist">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <hr class="hero-rule">
+            <h1>Lost on some<br>odd road.</h1>
+            <p class="hero-sub">Literary travel writing. Weekly dispatches from the roads less mapped — the odd detours, wrong turns, and beautiful accidents in between.</p>
+        </div>
+        <div class="hero-scroll">Scroll ↓</div>
+    </section>
+
+    <!-- ── Feed ── -->
+    <section class="feed-section" id="stories">
+        <div class="shell">
+            <div class="feed-label">Latest Dispatches</div>
+            <hr class="divider">
+        </div>
+    </section>
+
+    <!-- ── Featured Dispatch (Full Example) ── -->
+    <article class="featured reveal" id="dispatch-georgian">
+        <div class="shell">
+            <div class="featured-meta">
+                <span>22 April 2026</span>
+                <span class="dot"></span>
+                <span class="loc">Svaneti, Georgia</span>
+                <span class="dot"></span>
+                <span>6 min read</span>
+                <span class="dot"></span>
+                <span>Dispatch No. 042</span>
+            </div>
+
+            <h2>The Georgian Highway</h2>
+
+            <img class="featured-hero-img"
+                src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1400&q=80"
+                alt="Stone towers in the Svaneti valley, Georgia">
+            <div class="img-caption">Svan towers at dawn, Upper Svaneti — the architecture of permanent suspicion.</div>
+
+            <div class="dispatch-body">
+                <p>The air here tastes like rusted iron and old snow. We crossed into the valley just before dawn, the headlights cutting through a thick, obstinate fog that seemed to resent our intrusion. This isn't the sort of place you end up in by accident; it requires a deliberate sequence of poor navigational choices, a disregard for road-surface warnings, and the kind of optimism about fuel gauges that borders on theology.</p>
+
+                <p>To understand the local temperament, you must look at the architecture. The towers dot the landscape like stone sentinels — squat, humourless things built not for aesthetics but out of absolute, paranoid necessity. The kind of architecture that assumes history is cyclical, and the next cycle involves someone trying to burn your house down. In Svaneti, this assumption has proven correct often enough to justify the investment.</p>
+
+                <div class="pull-quote">
+                    "The geography dictates the commerce. Here, you pay for the logistics of flour moving up a mountain, not the butter."
+                </div>
+
+                <p>A black coffee costs you nothing if you know the right mechanic, or about 12 GEL if you decide to sit at the only café with a working espresso machine. The croissant is an entirely different negotiation.</p>
+
+                <div class="price-card">
+                    <div class="price-icon">₾</div>
+                    <div>
+                        <div class="label">Local Price Index — Black Coffee &amp; Croissant</div>
+                        <div class="value"><em>12 GEL</em> — approx. $4.50 USD, Mestia, Upper Svaneti</div>
+                    </div>
+                </div>
+
+                <p>We drove further up the ridge. The concept of a "road" became increasingly abstract, morphing from broken concrete to packed dirt, and finally to a suggestion of a path worn into the rock by generations of stubborn cattle. The rental agreement said nothing about this. The rental agreement assumed you would remain on surfaces that had been paved at some point in the post-Soviet era.</p>
+
+                <p>The map shows a track. The locals say it washed out in October, leaving the infrastructure in a state of terminal disrepair. My last visit here was in 2018. The roads are a fraction better, but the isolation remains absolute. Cell service is a rumour. Wi-Fi is a philosophical concept. The only reliable signal is the one the mountains send every evening when the clouds descend and the temperature drops twenty degrees in an hour: go inside, or become a cautionary anecdote.</p>
+            </div>
+
+            <div class="dispatch-end">
+                <span class="ornament">—</span>
+                <span>End of dispatch — 1,340 words</span>
+            </div>
+        </div>
+    </article>
+
+    <!-- ── Remaining Stories (compact) ── -->
+    <section class="feed-section">
+        <div class="shell">
+
+            <article class="story-card reveal">
+                <div class="sc-meta">
+                    <span>15 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="loc">Fez Medina, Morocco</span>
+                    <span class="dot"></span>
+                    <span>7 min read</span>
+                </div>
+                <h3>Nine Thousand Alleys</h3>
+                <p class="sc-excerpt">The medina doesn't have streets. It has intentions. Each passage narrows by degrees until you're turning sideways past a donkey carrying propane tanks, and the GPS has given up entirely, showing you as a blue dot floating in beige nothing.</p>
+                <div class="sc-footer">
+                    <span class="sc-tag">Story</span>
+                    <span>1,210 words</span>
+                    <span class="sc-read">Read dispatch →</span>
+                </div>
+            </article>
+
+            <article class="story-card reveal">
+                <div class="sc-meta">
+                    <span>8 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="loc">Ruta 40, Patagonia</span>
+                    <span class="dot"></span>
+                    <span>5 min read</span>
+                </div>
+                <h3>The Wind Tax</h3>
+                <p class="sc-excerpt">Nobody tells you about the wind. Not the guidebook, not the Argentine at the petrol station who sold you the last empanada. The wind in Patagonia is not weather. It is infrastructure. It is a permanent architectural feature of the air.</p>
+                <div class="sc-footer">
+                    <span class="sc-tag">Film</span>
+                    <span>1,480 words</span>
+                    <span class="sc-read">Read dispatch →</span>
+                </div>
+            </article>
+
+            <article class="story-card reveal">
+                <div class="sc-meta">
+                    <span>1 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="loc">Luang Prabang, Laos</span>
+                    <span class="dot"></span>
+                    <span>8 min read</span>
+                </div>
+                <h3>The Alms Economy</h3>
+                <p class="sc-excerpt">At 5:30 a.m. the monks file out in a line of saffron that looks like the town is slowly haemorrhaging sunrise. The tourists crouch with their cameras. The locals kneel with their rice. The distinction tells you everything.</p>
+                <div class="sc-footer">
+                    <span class="sc-tag">Story</span>
+                    <span>1,105 words</span>
+                    <span class="sc-read">Read dispatch →</span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ── Subscribe ── -->
+    <section class="subscribe" id="subscribe">
+        <div class="shell">
+            <h3>For the price of a black coffee<br>and a croissant.</h3>
+            <p>One dispatch a week. No spam, no algorithms, no listicles. Just <span class="hl">words from the road</span> — delivered to your inbox every Tuesday.</p>
+            <form class="sub-form" onsubmit="event.preventDefault()">
+                <input type="email" id="sub-email" placeholder="your@email.com" required>
+                <button type="submit" id="sub-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+        <div class="shell">
+            <div class="f-brand">someoddroad.org</div>
+            <div class="f-note">Lost on some odd road — since 2026</div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on scroll
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Subscribe interaction
+        document.getElementById('sub-btn').addEventListener('click', () => {
+            const inp = document.getElementById('sub-email');
+            const btn = document.getElementById('sub-btn');
+            if (inp.value && inp.checkValidity()) {
+                btn.textContent = 'Subscribed';
+                btn.style.background = '#2C6B4F';
+                btn.style.borderColor = '#2C6B4F';
+                inp.disabled = true; btn.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>

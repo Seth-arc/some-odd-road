@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Some Odd Road — Field 042 · A short piece from Mestia, Georgia.">
+    <title>Some Odd Road — No. 042 · Mestia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Caveat:wght@400;500;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --paper:#EDE4D2;
+            --paper-dk:#E1D7BF;
+            --ink:#1A1613;
+            --ink-soft:#3A3229;
+            --mute:#857C6B;
+            --line:#CFC4AD;
+            --tom:#A93729;
+            --tom-dk:#842418;
+            --pen:#324B6E;
+            --pencil:#5D544B;
+            --display:'Fraunces',Georgia,serif;
+            --body:'EB Garamond',Georgia,serif;
+            --hand:'Caveat',cursive;
+            --type:'Courier Prime',ui-monospace,monospace;
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.72;overflow-x:hidden;position:relative}
+        ::selection{background:var(--tom);color:var(--paper)}
+        a{color:inherit;text-decoration:none}
+        img{display:block;max-width:100%}
+
+        /* SUBTLE PAPER GRAIN */
+        .grain{position:fixed;inset:0;pointer-events:none;z-index:80;mix-blend-mode:multiply;opacity:.07;
+            background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.88 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+        /* PAGE HEADER — typewritten running head */
+        .page-head{position:fixed;top:0;left:0;right:0;z-index:70;padding:1rem 2rem;background:var(--paper);display:flex;justify-content:space-between;align-items:center;font-family:var(--type);font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+        .page-head .l,.page-head .r{display:flex;gap:1.2rem;align-items:center}
+        .page-head .r a{transition:color .2s}
+        .page-head .r a:hover{color:var(--tom)}
+        .page-head .folio{color:var(--tom)}
+
+        /* COVER BLOCK — paperback frontispiece */
+        .cover{padding:6rem 0 0;position:relative}
+        .cover-grid{max-width:1180px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.05fr 1fr;gap:0;min-height:560px;position:relative}
+        .cover-paint{background:var(--tom);color:var(--paper);padding:3rem 2.8rem 3rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+        .cover-paint::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.14;
+            background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+            mix-blend-mode:multiply}
+        .cover-top{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--type);font-size:.65rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(237,228,210,.85);position:relative;z-index:1}
+        .cover-top .pub{text-align:right}
+        .cover-top .pub b{display:block;font-weight:400;color:var(--paper);letter-spacing:3px;margin-bottom:.25rem}
+
+        .cover-title{position:relative;z-index:1;padding:2rem 0 1.5rem}
+        .cover-eyebrow{font-family:var(--type);font-size:.7rem;text-transform:uppercase;letter-spacing:4px;color:rgba(237,228,210,.82);margin-bottom:1rem}
+        .cover-title h1{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(3rem,6.2vw,5.2rem);font-variation-settings:"SOFT" 70;line-height:.98;letter-spacing:-.02em;color:var(--paper);margin-bottom:.8rem}
+        .cover-title .by{font-family:var(--body);font-style:italic;font-size:1.05rem;color:rgba(237,228,210,.82);letter-spacing:.5px}
+        .cover-title .by b{font-weight:500;color:var(--paper);font-style:normal;text-transform:uppercase;letter-spacing:3px;font-size:.85rem;margin-left:.2rem}
+
+        .cover-bot{position:relative;z-index:1;border-top:1px solid rgba(237,228,210,.35);padding-top:1.2rem;font-family:var(--type);font-size:.62rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(237,228,210,.72);display:flex;justify-content:space-between}
+
+        /* Draft stamp */
+        .draft-stamp{position:absolute;top:1.2rem;right:1.2rem;z-index:2;transform:rotate(-9deg);border:1.5px solid rgba(237,228,210,.65);padding:.4rem .7rem;font-family:var(--type);font-size:.6rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(237,228,210,.82)}
+
+        .cover-photo{position:relative;overflow:hidden;background:var(--ink)}
+        .cover-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(130%) brightness(78%);transition:filter 1.4s ease,transform 2s ease}
+        .cover-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,22,19,.1) 0%,transparent 35%,rgba(26,22,19,.35) 100%);pointer-events:none}
+        .cover-photo .photo-cap{position:absolute;bottom:1rem;left:1rem;right:1rem;font-family:var(--type);font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:rgba(237,228,210,.82);z-index:2;text-align:right}
+
+        /* EPIGRAPH */
+        .epigraph{max-width:620px;margin:4.5rem auto 1.5rem;padding:0 2rem;text-align:center}
+        .epigraph blockquote{font-family:var(--body);font-style:italic;font-weight:400;font-size:1.15rem;line-height:1.6;color:var(--ink-soft);letter-spacing:.1px}
+        .epigraph cite{display:block;font-family:var(--type);font-style:normal;font-size:.68rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--tom);margin-top:1rem}
+        .epigraph cite::before{content:'— '}
+
+        /* MANUSCRIPT NOTE (handwritten) */
+        .mark{max-width:620px;margin:0 auto 4rem;padding:0 2rem;text-align:center}
+        .mark span{font-family:var(--hand);font-weight:400;font-size:1.3rem;color:var(--pen);letter-spacing:.5px;display:inline-block;transform:rotate(-1.2deg)}
+
+        /* ARTICLE */
+        .article{max-width:640px;margin:0 auto;padding:0 2rem 3rem;position:relative}
+
+        .chapter{text-align:center;margin:3.5rem 0 2.2rem;display:flex;align-items:center;justify-content:center;gap:1.4rem;font-family:var(--type);font-size:.72rem;text-transform:uppercase;letter-spacing:5px;color:var(--tom)}
+        .chapter::before,.chapter::after{content:'';flex:0 1 90px;height:1px;background:var(--ink-soft)}
+
+        .prose p{font-family:var(--body);font-size:1.2rem;line-height:1.8;color:var(--ink);margin-bottom:0;letter-spacing:-.001em}
+        .prose p + p{text-indent:1.6em;margin-top:0}
+        .prose p.no-indent{text-indent:0}
+        .prose p.lede::first-line{font-variant:small-caps;letter-spacing:1.5px;font-weight:500;color:var(--ink)}
+
+        /* Handwritten margin note */
+        .margin-note{position:relative;display:block;margin:1.2rem 0}
+        .margin-note .body{position:relative;z-index:1}
+        .margin-note .aside{position:absolute;left:-260px;top:0;width:220px;font-family:var(--hand);font-weight:500;font-size:1.15rem;line-height:1.3;color:var(--pen);letter-spacing:.3px;transform:rotate(-1deg)}
+        .margin-note.right .aside{left:auto;right:-260px;transform:rotate(1.2deg);text-align:left}
+        .margin-note .aside::before{content:'';display:block;width:36px;height:1px;background:var(--pen);margin-bottom:.4rem;opacity:.55}
+
+        /* Pencil correction — struck line over a word with replacement above */
+        .correction{position:relative;display:inline-block;margin:0 .15em}
+        .correction .old{text-decoration:line-through;text-decoration-color:var(--pencil);text-decoration-thickness:1.5px;color:var(--pencil);opacity:.7}
+        .correction .new{position:absolute;top:-1em;left:50%;transform:translateX(-50%) rotate(-1.2deg);font-family:var(--hand);font-weight:500;color:var(--pen);font-size:.85em;white-space:nowrap;line-height:1}
+
+        /* Pullquote — Catcher paperback moment */
+        .pullquote{margin:3.6rem -1rem;background:var(--tom);color:var(--paper);padding:2.8rem 2.4rem;text-align:center;position:relative;overflow:hidden}
+        .pullquote::before{content:'';position:absolute;inset:0;opacity:.12;pointer-events:none;
+            background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+            mix-blend-mode:multiply}
+        .pullquote q{font-family:var(--display);font-style:italic;font-weight:400;font-variation-settings:"SOFT" 60;font-size:clamp(1.5rem,3vw,2rem);line-height:1.25;letter-spacing:-.01em;quotes:none;display:block;max-width:520px;margin:0 auto;position:relative;z-index:1}
+        .pullquote cite{display:block;font-family:var(--type);font-style:normal;font-size:.66rem;text-transform:uppercase;letter-spacing:2.8px;color:rgba(237,228,210,.78);margin-top:1.3rem;position:relative;z-index:1}
+        .pullquote cite::before{content:'— '}
+
+        /* Pencil divider SVG */
+        .pencil-hr{max-width:220px;margin:3.2rem auto;height:18px;display:block;color:var(--pencil);opacity:.75}
+
+        /* Dean portrait moment */
+        .portrait{margin:3.6rem 0;position:relative}
+        .portrait-frame{position:relative;background:var(--ink);overflow:hidden;aspect-ratio:4/5;max-width:440px;margin:0 auto}
+        .portrait-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(132%) brightness(82%)}
+        .portrait-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,22,19,.45),transparent 55%);pointer-events:none}
+        .portrait-cap{font-family:var(--type);font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--mute);text-align:center;margin-top:1rem;line-height:1.7}
+        .portrait-cap b{color:var(--tom);font-weight:400;letter-spacing:3px}
+
+        /* Signature closer */
+        .closer{margin:3.8rem 0 0;padding-top:2.5rem;border-top:1px solid var(--line);text-align:center}
+        .closer .sig{font-family:var(--hand);font-weight:600;font-size:2.6rem;color:var(--pen);letter-spacing:1px;display:inline-block;transform:rotate(-2deg);line-height:1;margin-bottom:.9rem}
+        .closer .filed{font-family:var(--type);font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--mute)}
+        .closer .filed b{color:var(--tom);font-weight:400}
+
+        /* TABLE OF CONTENTS */
+        .toc{max-width:720px;margin:5rem auto 0;padding:3rem 2rem 3.5rem;border-top:2px solid var(--ink)}
+        .toc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2.2rem;font-family:var(--type);font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--ink)}
+        .toc-head .t{font-family:var(--display);font-style:italic;font-weight:400;font-size:2rem;letter-spacing:-.015em;text-transform:none;color:var(--ink)}
+        .toc-head .s{color:var(--mute)}
+
+        .toc-row{display:grid;grid-template-columns:70px 1fr auto;gap:1.4rem;align-items:baseline;padding:1.4rem 0;border-bottom:1px dotted var(--line);cursor:pointer;transition:color .25s}
+        .toc-row:last-child{border-bottom:none}
+        .toc-row:hover .toc-title{color:var(--tom)}
+        .toc-num{font-family:var(--type);font-size:.7rem;letter-spacing:2.5px;color:var(--tom);text-transform:uppercase}
+        .toc-title{font-family:var(--display);font-style:italic;font-weight:400;font-variation-settings:"SOFT" 60;font-size:1.4rem;line-height:1.2;color:var(--ink);margin-bottom:.3rem;transition:color .25s;letter-spacing:-.01em}
+        .toc-loc{font-family:var(--type);font-size:.64rem;text-transform:uppercase;letter-spacing:2px;color:var(--mute)}
+        .toc-pg{font-family:var(--type);font-size:.66rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--ink-soft)}
+
+        /* SUBSCRIBE — polite card */
+        .sub{max-width:640px;margin:2rem auto 0;padding:3rem 2rem 3.5rem;text-align:center;position:relative}
+        .sub::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60px;height:1px;background:var(--tom)}
+        .sub h3{font-family:var(--display);font-style:italic;font-weight:400;font-variation-settings:"SOFT" 60;font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1.25;margin-bottom:.6rem;letter-spacing:-.01em}
+        .sub h3 em{color:var(--tom);font-style:italic}
+        .sub .pitch{font-family:var(--body);font-style:italic;font-size:1rem;color:var(--mute);max-width:420px;margin:0 auto 2rem;line-height:1.6}
+        .sub-form{display:flex;max-width:400px;margin:0 auto;border-bottom:1px solid var(--ink);transition:border-color .3s}
+        .sub-form:focus-within{border-color:var(--tom)}
+        .sub-form input{flex:1;padding:.9rem .2rem;font-family:var(--type);font-size:.82rem;letter-spacing:1px;border:none;background:transparent;color:var(--ink);outline:none}
+        .sub-form input::placeholder{color:var(--mute)}
+        .sub-form button{padding:.9rem 0 .9rem 1rem;font-family:var(--type);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;background:transparent;color:var(--tom);border:none;cursor:pointer;transition:letter-spacing .3s}
+        .sub-form button:hover{letter-spacing:4px}
+
+        /* FOOTER */
+        .foot{max-width:720px;margin:0 auto;padding:3rem 2rem 3rem;text-align:center;border-top:1px solid var(--line)}
+        .foot-quote{font-family:var(--display);font-style:italic;font-weight:300;font-variation-settings:"SOFT" 80;font-size:1.2rem;line-height:1.55;color:var(--ink);max-width:520px;margin:0 auto 1.2rem;letter-spacing:-.005em}
+        .foot-quote cite{display:block;font-family:var(--type);font-style:normal;font-size:.62rem;text-transform:uppercase;letter-spacing:2.8px;color:var(--tom);margin-top:.8rem}
+        .foot-quote cite::before{content:'— '}
+        .foot-bar{margin-top:1.8rem;padding-top:1.4rem;border-top:1px dotted var(--line);font-family:var(--type);font-size:.62rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--mute);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+        .foot-bar .hot{color:var(--tom)}
+
+        /* REVEAL */
+        .rv{opacity:0;transform:translateY(18px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+        .rv.on{opacity:1;transform:translateY(0)}
+        .rv-hand{opacity:0;transition:opacity 1.4s ease .3s}
+        .rv-hand.on{opacity:1}
+
+        @media(max-width:960px){
+            .margin-note .aside{position:static;width:auto;margin:.6rem 0;display:block;font-size:1.05rem;transform:none;text-align:left;padding:.4rem 0 .4rem 1rem;border-left:2px solid var(--pen);color:var(--pen)}
+            .margin-note .aside::before{display:none}
+            .margin-note.right .aside{transform:none}
+        }
+        @media(max-width:720px){
+            .page-head{padding:.85rem 1rem;font-size:.58rem;letter-spacing:1.5px}
+            .page-head .l,.page-head .r{gap:.8rem}
+            .cover{padding:4rem 0 0}
+            .cover-grid{grid-template-columns:1fr;padding:0 1rem;min-height:0;gap:0}
+            .cover-paint{padding:2.2rem 1.6rem 2rem}
+            .cover-title h1{font-size:2.8rem}
+            .cover-photo{aspect-ratio:4/3;height:auto}
+            .epigraph,.mark,.article{padding-left:1.2rem;padding-right:1.2rem}
+            .prose p{font-size:1.1rem}
+            .pullquote{margin:2.8rem 0;padding:2.2rem 1.4rem}
+            .toc,.sub,.foot{padding-left:1.2rem;padding-right:1.2rem}
+            .toc-head{flex-direction:column;align-items:flex-start;gap:.4rem}
+            .toc-row{grid-template-columns:1fr auto;gap:.6rem}
+            .toc-num{grid-column:1/-1}
+            .toc-pg{text-align:right}
+            .foot-bar{flex-direction:column;gap:.4rem}
+        }
+    </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="page-head">
+    <div class="l">
+        <span>Some Odd Road</span>
+        <span class="folio">No. 042</span>
+    </div>
+    <div class="r">
+        <a href="#story">Story</a>
+        <a href="#collection">Collection</a>
+        <a href="#subscribe">Subscribe</a>
+    </div>
+</header>
+
+<!-- COVER -->
+<section class="cover">
+    <div class="cover-grid">
+
+        <div class="cover-paint">
+            <div class="draft-stamp">Draft · No. 3</div>
+            <div class="cover-top">
+                <span>Field 042</span>
+                <span class="pub"><b>Some Odd Road</b>First printing · April MMXXVI</span>
+            </div>
+            <div class="cover-title">
+                <div class="cover-eyebrow">A short piece, from the road</div>
+                <h1>The<br>Georgian<br>Highway</h1>
+                <p class="by">a field note by<b>The Editor</b></p>
+            </div>
+            <div class="cover-bot">
+                <span>Mestia, Georgia</span>
+                <span>6 min · 1,340 wd</span>
+            </div>
+        </div>
+
+        <div class="cover-photo">
+            <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1400&q=85" alt="The road into Upper Svaneti, before dawn">
+            <div class="photo-cap">Plate I · The valley road, 04:42</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- EPIGRAPH -->
+<section class="epigraph">
+    <blockquote>People never notice anything.</blockquote>
+    <cite>J. D. Salinger, by way of Holden Caulfield</cite>
+</section>
+
+<div class="mark rv-hand" id="mark1">
+    <span>draft 3. still not sure about the cow. — s.</span>
+</div>
+
+<!-- ARTICLE -->
+<article class="article" id="story">
+
+    <div class="chapter">One</div>
+
+    <div class="prose">
+        <p class="lede no-indent rv">I'll tell you about Georgia. Not the state — the country. People hear "Georgia" and think you mean Atlanta, which is almost never what I mean. I mean the one with the mountains and the vodka and the towers somebody built for a specific enemy I will never meet.</p>
+
+        <p class="rv">We went in before dawn. I don't remember whose idea that was — probably mine, I'm the kind of person who decides things like that and then acts surprised when nobody else is thrilled about it. The fog was everywhere. It sat on the valley like it owned the valley, which maybe it did.</p>
+
+        <div class="margin-note right rv">
+            <span class="aside">she asked me if i was scared. i said no. i was scared.</span>
+            <p class="body">The thing about Georgian drivers is they lie to you on purpose. Every one of them. In Tbilisi they say the road to Mestia is impossible in spring, and then they offer to drive it. Everyone offers. That's the whole thing about this country. It's a country of offers you shouldn't accept, and then do.</p>
+        </div>
+
+        <p class="rv">The headlights punched holes in the fog. The fog did not move. It resented us. We climbed for two hours and saw nothing. No signs. No houses. No other headlights. Just the road, and the part of the road that had stopped being a road somewhere around four in the morning. And that's when I started laughing, and couldn't stop, and didn't really try.</p>
+
+        <div class="chapter">Two</div>
+
+        <div class="margin-note rv">
+            <span class="aside">cut this? no, keep it. the towers are the whole thing.</span>
+            <p class="body no-indent">The towers are the part nobody tells you about. Or they tell you, but they get it wrong. They say "defensive architecture" the way you'd say a color or a decade, like it's a style. It isn't a style. It's a history. Every tower was built because somebody — specific, named, still remembered — was coming up that road with a grievance. And you can tell the Georgians are still a little proud of it.</p>
+        </div>
+
+        <p class="rv">"See that one?" the man in Ushguli said. "That was my great-grandfather's. He bricked up a window in 1922." I asked why. He looked at me the way you look at a child. He said, "Because nobody has needed to reopen it."</p>
+
+        <p class="rv">That is the truest sentence anybody has said to me all year. I wrote it down in the back of my passport in case I forgot. I forget a lot of things now. I don't forget sentences like that.</p>
+
+        <div class="pullquote rv">
+            <q>You pay for the mountain the butter crossed, not the butter.</q>
+            <cite>A shepherd, near Adishi</cite>
+        </div>
+
+        <p class="rv">Coffee was free if you knew the mechanic. Twelve lari if you didn't. The croissant was yesterday's. The croissant was twelve lari anyway. I ate it. I drank the coffee. I paid for everything, and then I left a tip that was larger than the bill, which is the sort of thing you do when you are trying to <span class="correction"><span class="old">perform</span><span class="new">apologize</span></span> for being foreign. It was the best twelve lari I have ever spent and I will not be taking questions about it.</p>
+
+        <!-- Pencil divider -->
+        <svg class="pencil-hr" viewBox="0 0 220 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M 4 9 C 20 4, 40 14, 60 9 S 100 4, 120 9 S 160 14, 180 9 S 210 4, 216 9"/>
+        </svg>
+
+        <div class="chapter">Three</div>
+
+        <div class="portrait rv">
+            <div class="portrait-frame">
+                <img src="https://images.unsplash.com/photo-1549565399-a73b385db5ed?w=900&q=85" alt="A figure walking alone on a narrow road">
+            </div>
+            <div class="portrait-cap"><b>Plate II</b> — The mechanic, probably, or somebody just like him.</div>
+        </div>
+
+        <p class="rv">The road fell apart in stages. Concrete. Gravel. Theory. Somewhere in the gravel I laughed again, this time alone — I don't know why. The cow was already gone. The cow had been gone for half an hour. I had been driving and not driving and sitting still and moving, all at the same time, the way you do when you are no longer certain where the road is, only that it has not given up on you yet.</p>
+
+        <p class="rv">The clouds came down at five. They always do. You learn that fast or you don't learn it. I went inside. I ordered a vodka. The mechanic was there. He raised his glass. Neither of us said anything. He knew. I knew. It didn't need to be said, and we didn't say it, and outside the fog came back for the road, and the road did not argue.</p>
+    </div>
+
+    <div class="closer rv">
+        <div class="sig">— s.</div>
+        <div class="filed">Filed by hand <b>·</b> Mestia <b>·</b> April MMXXVI</div>
+    </div>
+
+</article>
+
+<!-- TABLE OF CONTENTS -->
+<section class="toc" id="collection">
+    <div class="toc-head">
+        <span class="t">Also in this collection</span>
+        <span class="s">Three short pieces</span>
+    </div>
+
+    <div class="toc-row rv">
+        <span class="toc-num">No. 041</span>
+        <div>
+            <div class="toc-title">Nine Thousand Alleys</div>
+            <div class="toc-loc">Fez Medina, Morocco · 15·IV·MMXXVI</div>
+        </div>
+        <span class="toc-pg">p. 12</span>
+    </div>
+
+    <div class="toc-row rv">
+        <span class="toc-num">No. 040</span>
+        <div>
+            <div class="toc-title">The Wind Tax</div>
+            <div class="toc-loc">Ruta 40, Patagonia · 08·IV·MMXXVI</div>
+        </div>
+        <span class="toc-pg">p. 24</span>
+    </div>
+
+    <div class="toc-row rv">
+        <span class="toc-num">No. 039</span>
+        <div>
+            <div class="toc-title">The Alms Economy</div>
+            <div class="toc-loc">Luang Prabang, Laos · 01·IV·MMXXVI</div>
+        </div>
+        <span class="toc-pg">p. 36</span>
+    </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section class="sub" id="subscribe">
+    <h3>A small thing, in the mail,<br><em>on Tuesdays.</em></h3>
+    <p class="pitch">One dispatch a week. No spam, no tracking, no listicles. If you hate it, leave. If you love it, don't tell me.</p>
+    <form class="sub-form" onsubmit="event.preventDefault()">
+        <input type="email" id="sub-email" placeholder="your@email.com" required>
+        <button type="submit" id="sub-btn">Subscribe</button>
+    </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+    <div class="foot-quote">
+        Dream as if you'll live forever. Live as if you'll die today.
+        <cite>James Dean</cite>
+    </div>
+    <div class="foot-bar">
+        <span>Some Odd Road</span>
+        <span class="hot">© MMXXVI</span>
+        <span>someoddroad.org</span>
+    </div>
+</footer>
+
+<script>
+    const obs=new IntersectionObserver(e=>{
+        e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');obs.unobserve(x.target)}})
+    },{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.rv,.rv-hand').forEach(el=>obs.observe(el));
+
+    document.getElementById('sub-btn').addEventListener('click',()=>{
+        const i=document.getElementById('sub-email'),b=document.getElementById('sub-btn');
+        if(i.value&&i.checkValidity()){
+            b.textContent='On the list';
+            b.style.color='#1A1613';
+            i.disabled=b.disabled=true;
+        }
+    });
+</script>
+</body>
+</html>

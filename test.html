@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Some Odd Road — Literary travel writing. Weekly stories from the roads less mapped. Lost on some odd road.">
+    <title>Some Odd Road — Lost on some odd road.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ── Design Tokens ── */
+        :root {
+            --bg: #FAF7F2;
+            --bg-warm: #F3EDE4;
+            --text: #2C2825;
+            --text-secondary: #6B6560;
+            --text-muted: #9E9790;
+            --accent: #C4572A;
+            --accent-hover: #A8441E;
+            --border: #E5DFD6;
+            --border-light: #EDE8E0;
+            --serif: 'Newsreader', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        /* ── Reset & Base ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--serif);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ── Layout Shell ── */
+        .shell {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── Site Header ── */
+        .site-header {
+            padding: 3rem 0 0;
+            position: relative;
+        }
+
+        .site-header .shell {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .brand-mark {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text);
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            font-family: var(--sans);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .site-nav a {
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .site-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .site-nav a:hover { color: var(--text); }
+        .site-nav a:hover::after { width: 100%; }
+
+        /* ── Hero / Masthead ── */
+        .masthead {
+            padding: 6rem 0 5rem;
+            text-align: left;
+        }
+
+        .masthead-rule {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 2rem;
+            border: none;
+        }
+
+        .masthead h1 {
+            font-family: var(--serif);
+            font-size: clamp(2.8rem, 6vw, 4.2rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .masthead-sub {
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+            max-width: 480px;
+        }
+
+        /* ── Dividers ── */
+        .divider {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ── Story Feed ── */
+        .feed {
+            padding: 0 0 4rem;
+        }
+
+        .feed-header {
+            font-family: var(--sans);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-muted);
+            padding: 2rem 0 1.5rem;
+        }
+
+        /* ── Story Card ── */
+        .story {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .story:last-child { border-bottom: none; }
+
+        .story:hover { opacity: 0.75; }
+
+        .story-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-family: var(--sans);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+        }
+
+        .story-meta .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .story-location {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .story h2 {
+            font-family: var(--serif);
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .story-excerpt {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 1.25rem;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            margin-top: 1.5rem;
+            filter: grayscale(20%) contrast(105%);
+            transition: filter 0.5s ease;
+        }
+
+        .story:hover .story-image {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        .story-footer {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 1rem;
+            font-family: var(--sans);
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .story-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .read-link {
+            font-family: var(--sans);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: gap 0.3s ease;
+        }
+
+        .story:hover .read-link { gap: 0.7rem; }
+
+        /* ── Subscribe Banner ── */
+        .subscribe-banner {
+            background: var(--bg-warm);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .subscribe-banner h3 {
+            font-family: var(--serif);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.35;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .subscribe-banner p {
+            font-family: var(--sans);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            max-width: 440px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .price-tag {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.2rem;
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            border-right: none;
+            background: var(--bg);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .subscribe-form input[type="email"]:focus {
+            border-color: var(--accent);
+        }
+
+        .subscribe-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .subscribe-form button {
+            padding: 0.85rem 1.8rem;
+            font-family: var(--sans);
+            font-size: 0.68rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--accent);
+            color: #fff;
+            border: 1px solid var(--accent);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .subscribe-form button:hover {
+            background: var(--accent-hover);
+        }
+
+        /* ── Footer ── */
+        .site-footer {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: var(--sans);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-note {
+            font-family: var(--serif);
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .masthead { animation: fadeUp 0.8s ease both; }
+        .story:nth-child(1) { animation-delay: 0.1s; }
+        .story:nth-child(2) { animation-delay: 0.2s; }
+        .story:nth-child(3) { animation-delay: 0.3s; }
+        .story:nth-child(4) { animation-delay: 0.4s; }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .shell { padding: 0 1.25rem; }
+            .masthead { padding: 4rem 0 3rem; }
+            .site-nav { gap: 1.2rem; }
+            .story-image { height: 220px; }
+            .subscribe-form {
+                flex-direction: column;
+            }
+            .subscribe-form input[type="email"] {
+                border-right: 1px solid var(--border);
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+        <div class="shell">
+            <a href="/" class="brand-mark">Some Odd Road</a>
+            <nav>
+                <ul class="site-nav">
+                    <li><a href="#stories">Stories</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#subscribe">Subscribe</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── Masthead ── -->
+    <section class="masthead">
+        <div class="shell">
+            <hr class="masthead-rule">
+            <h1>Lost on some<br>odd road.</h1>
+            <p class="masthead-sub">
+                Literary travel writing. Weekly dispatches from the roads less mapped&hairsp;—&hairsp;the
+                odd detours, the wrong turns, and the beautiful accidents in between.
+            </p>
+        </div>
+    </section>
+
+    <div class="shell"><hr class="divider"></div>
+
+    <!-- ── Story Feed ── -->
+    <section class="feed" id="stories">
+        <div class="shell">
+            <div class="feed-header">Latest Dispatches</div>
+
+            <!-- Story 1 — Latest -->
+            <article class="story">
+                <div class="story-meta">
+                    <span>22 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="story-location">Svaneti, Georgia</span>
+                    <span class="dot"></span>
+                    <span>6 min read</span>
+                </div>
+                <h2>The Georgian Highway</h2>
+                <p class="story-excerpt">
+                    The air here tastes like rusted iron and old snow. We crossed into the valley just
+                    before dawn, the headlights cutting through a thick, obstinate fog that seemed to
+                    resent our intrusion. This isn't the sort of place you end up in by accident.
+                </p>
+                <img class="story-image"
+                    src="https://images.unsplash.com/photo-1594766722982-fb4cd139ee7c?w=1200&q=80"
+                    alt="Stone towers in the Svaneti valley, Georgia"
+                    loading="lazy">
+                <div class="story-footer">
+                    <span class="story-type">Story</span>
+                    <span>1,340 words</span>
+                    <span class="read-link">Read dispatch →</span>
+                </div>
+            </article>
+
+            <!-- Story 2 -->
+            <article class="story">
+                <div class="story-meta">
+                    <span>15 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="story-location">Fez Medina, Morocco</span>
+                    <span class="dot"></span>
+                    <span>7 min read</span>
+                </div>
+                <h2>Nine Thousand Alleys</h2>
+                <p class="story-excerpt">
+                    The medina doesn't have streets. It has intentions. Each passage narrows by
+                    degrees until you're turning sideways past a donkey carrying propane tanks, and
+                    the GPS has given up entirely, showing you as a blue dot floating in beige nothing.
+                </p>
+                <img class="story-image"
+                    src="https://images.unsplash.com/photo-1549565399-a73b385db5ed?w=1200&q=80"
+                    alt="Narrow alley in the Fez medina, Morocco"
+                    loading="lazy">
+                <div class="story-footer">
+                    <span class="story-type">Story</span>
+                    <span>1,210 words</span>
+                    <span class="read-link">Read dispatch →</span>
+                </div>
+            </article>
+
+            <!-- Story 3 -->
+            <article class="story">
+                <div class="story-meta">
+                    <span>8 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="story-location">Ruta 40, Patagonia</span>
+                    <span class="dot"></span>
+                    <span>5 min read</span>
+                </div>
+                <h2>The Wind Tax</h2>
+                <p class="story-excerpt">
+                    Nobody tells you about the wind. Not the guidebook, not the Argentine at the
+                    petrol station who sold you the last empanada. The wind in Patagonia is not
+                    weather. It is infrastructure. It is a permanent architectural feature of the air.
+                </p>
+                <img class="story-image"
+                    src="https://images.unsplash.com/photo-1531761535209-180857e963b9?w=1200&q=80"
+                    alt="Empty road stretching across Patagonian steppe"
+                    loading="lazy">
+                <div class="story-footer">
+                    <span class="story-type">Film</span>
+                    <span>1,480 words</span>
+                    <span class="read-link">Read dispatch →</span>
+                </div>
+            </article>
+
+            <!-- Story 4 -->
+            <article class="story">
+                <div class="story-meta">
+                    <span>1 April 2026</span>
+                    <span class="dot"></span>
+                    <span class="story-location">Luang Prabang, Laos</span>
+                    <span class="dot"></span>
+                    <span>8 min read</span>
+                </div>
+                <h2>The Alms Economy</h2>
+                <p class="story-excerpt">
+                    At 5:30 a.m. the monks file out in a line of saffron that looks like the town is
+                    slowly haemorrhaging sunrise. The tourists crouch with their cameras. The locals
+                    kneel with their rice. The distinction tells you everything.
+                </p>
+                <div class="story-footer">
+                    <span class="story-type">Story</span>
+                    <span>1,105 words</span>
+                    <span class="read-link">Read dispatch →</span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ── Subscribe ── -->
+    <section class="subscribe-banner" id="subscribe">
+        <div class="shell">
+            <h3>For the price of a black coffee<br>and a croissant.</h3>
+            <p>
+                One story a week. No spam, no algorithms, no listicles.
+                Just <span class="price-tag">words from the road</span>&hairsp;—&hairsp;delivered
+                to your inbox every Tuesday.
+            </p>
+            <form class="subscribe-form" onsubmit="event.preventDefault()">
+                <input type="email" id="subscribe-email" placeholder="your@email.com" required>
+                <button type="submit" id="subscribe-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+        <div class="shell">
+            <div class="footer-brand">someoddroad.org</div>
+            <div class="footer-note">Lost on some odd road — since 2026</div>
+        </div>
+    </footer>
+
+    <!-- ── Scroll Animations ── -->
+    <script>
+        // Intersection Observer for gentle fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        // Observe stories for scroll animation
+        document.querySelectorAll('.story').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.6s ease ${i * 0.08}s, transform 0.6s ease ${i * 0.08}s`;
+            observer.observe(el);
+        });
+
+        // Subtle subscribe button interaction
+        const btn = document.getElementById('subscribe-btn');
+        const emailInput = document.getElementById('subscribe-email');
+
+        btn.addEventListener('click', () => {
+            if (emailInput.value && emailInput.checkValidity()) {
+                btn.textContent = 'Subscribed';
+                btn.style.background = '#2C6B4F';
+                btn.style.borderColor = '#2C6B4F';
+                emailInput.disabled = true;
+                btn.disabled = true;
+            }
+        });
+    </script>
+
+</body>
+</html>

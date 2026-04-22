@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Some Odd Road — Literary travel writing. Weekly dispatches from the roads less mapped.">
+    <title>Some Odd Road — Lost on some odd road.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#FAF7F2;--warm:#F3EDE4;--dark:#1C1917;--ink:#2C2825;--mid:#6B6560;--mute:#9E9790;--accent:#C4572A;--line:#E5DFD6;--serif:'Newsreader',Georgia,serif;--sans:'Inter',-apple-system,sans-serif}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+        body{background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.7;overflow-x:hidden}
+        ::selection{background:var(--accent);color:#fff}
+        a{color:inherit;text-decoration:none}
+        img{display:block;max-width:100%}
+        .sh{max-width:720px;margin:0 auto;padding:0 2rem}
+
+        /* ─── NAV ─── */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.4rem 2.5rem;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
+        .nav-logo{font-family:var(--sans);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:#fff}
+        .nav-links{display:flex;gap:2rem;list-style:none;font-family:var(--sans);font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:#fff}
+        .nav-links a{opacity:.7;transition:opacity .3s}.nav-links a:hover{opacity:1}
+
+        /* ─── HERO ─── */
+        .hero{position:relative;height:100vh;display:flex;align-items:flex-end;background:var(--dark);overflow:hidden}
+        .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;filter:contrast(110%);animation:drift 30s ease-in-out infinite alternate}
+        @keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1%,1%)}}
+        .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,25,23,.95) 0%,rgba(28,25,23,.4) 45%,rgba(28,25,23,.15) 100%)}
+        .hero-inner{position:relative;z-index:2;padding:0 3rem 5rem;max-width:760px}
+        .hero-rule{width:36px;height:2px;background:var(--accent);border:none;margin-bottom:1.5rem}
+        .hero h1{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(3.2rem,7vw,5.5rem);line-height:1.08;letter-spacing:-.025em;color:#F0EDE8;margin-bottom:1.2rem}
+        .hero-tagline{font-family:var(--sans);font-size:.85rem;color:rgba(240,237,232,.45);letter-spacing:.5px;max-width:420px;line-height:1.8}
+        .scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--sans);font-size:.55rem;text-transform:uppercase;letter-spacing:4px;color:rgba(255,255,255,.25);animation:breathe 2.5s ease-in-out infinite}
+        @keyframes breathe{0%,100%{opacity:.2;transform:translateX(-50%) translateY(0)}50%{opacity:.5;transform:translateX(-50%) translateY(4px)}}
+
+        /* ─── SECTION LABELS ─── */
+        .sec-label{font-family:var(--sans);font-size:.6rem;text-transform:uppercase;letter-spacing:3px;color:var(--mute);padding:3.5rem 0 1.5rem}
+        .hr{border:none;height:1px;background:var(--line)}
+
+        /* ─── FEATURED DISPATCH ─── */
+        .featured{padding:3rem 0 4rem;border-bottom:1px solid var(--line)}
+        .f-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-family:var(--sans);font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--mute);margin-bottom:1rem}
+        .f-meta .loc{color:var(--accent);font-weight:500}
+        .f-meta .dt{width:3px;height:3px;border-radius:50%;background:var(--mute)}
+        .featured h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:400;line-height:1.2;letter-spacing:-.015em;margin-bottom:2rem}
+        .f-img{width:100%;height:420px;object-fit:cover;margin-bottom:.4rem;filter:grayscale(10%);transition:filter .6s}
+        .f-img:hover{filter:grayscale(0%)}
+        .f-cap{font-family:var(--sans);font-size:.62rem;color:var(--mute);font-style:italic;margin-bottom:2.5rem;letter-spacing:.3px}
+
+        /* Prose */
+        .prose p{font-size:1.15rem;line-height:1.85;color:var(--mid);margin-bottom:1.8rem;max-width:640px}
+        .prose p:first-child::first-letter{font-size:4rem;float:left;line-height:.78;margin:.08em .14em 0 0;font-weight:400;color:var(--ink)}
+        .pullquote{margin:2.8rem 0;padding:1.8rem 0 1.8rem 2rem;border-left:2px solid var(--accent);font-family:var(--serif);font-style:italic;font-size:1.35rem;line-height:1.5;color:var(--ink);max-width:540px}
+
+        /* Coffee callout */
+        .price-box{background:var(--warm);padding:1.6rem 2rem;margin:2.5rem 0;display:flex;gap:1.4rem;align-items:center;border-left:3px solid var(--accent)}
+        .price-box svg{flex-shrink:0;width:28px;height:28px;color:var(--accent)}
+        .price-label{font-family:var(--sans);font-size:.58rem;text-transform:uppercase;letter-spacing:2px;color:var(--mute);margin-bottom:.2rem}
+        .price-val{font-family:var(--serif);font-size:1.05rem;color:var(--ink)}
+        .price-val em{color:var(--accent);font-style:normal;font-weight:500}
+
+        .dispatch-end{display:flex;align-items:center;gap:.8rem;padding-top:1.5rem;margin-top:2rem;border-top:1px solid var(--line);font-family:var(--sans);font-size:.65rem;color:var(--mute);letter-spacing:.5px}
+        .dispatch-end span:first-child{color:var(--accent);font-size:.9rem}
+
+        /* ─── STORY CARDS ─── */
+        .card{padding:2.5rem 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .3s}
+        .card:hover{opacity:.7}
+        .card:last-child{border-bottom:none}
+        .c-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-family:var(--sans);font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--mute);margin-bottom:.5rem}
+        .c-meta .loc{color:var(--accent);font-weight:500}
+        .c-meta .dt{width:3px;height:3px;border-radius:50%;background:var(--mute)}
+        .card h3{font-size:1.55rem;font-weight:400;line-height:1.3;margin-bottom:.7rem}
+        .c-ex{font-size:1.05rem;line-height:1.7;color:var(--mid);max-width:560px;margin-bottom:.8rem}
+        .c-foot{font-family:var(--sans);font-size:.62rem;color:var(--mute);display:flex;align-items:center;gap:1rem}
+        .c-tag{padding:.12rem .5rem;border:1px solid var(--line);font-size:.55rem;text-transform:uppercase;letter-spacing:1px}
+        .c-read{color:var(--accent);font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:letter-spacing .3s}
+        .card:hover .c-read{letter-spacing:2px}
+
+        /* ─── SUBSCRIBE ─── */
+        .cta{background:var(--dark);color:#F0EDE8;padding:5.5rem 0;text-align:center}
+        .cta h3{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.3;margin-bottom:1rem}
+        .cta p{font-family:var(--sans);font-size:.82rem;color:rgba(240,237,232,.45);max-width:400px;margin:0 auto 2.2rem;line-height:1.8}
+        .cta .hl{font-style:italic;color:var(--accent)}
+        .cta-form{display:flex;max-width:400px;margin:0 auto}
+        .cta-form input{flex:1;padding:.85rem 1.2rem;font-family:var(--sans);font-size:.8rem;border:1px solid #333;border-right:none;background:transparent;color:#F0EDE8;outline:none;transition:border-color .3s}
+        .cta-form input:focus{border-color:var(--accent)}
+        .cta-form input::placeholder{color:#555}
+        .cta-form button{padding:.85rem 1.8rem;font-family:var(--sans);font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:2px;background:var(--accent);color:#fff;border:1px solid var(--accent);cursor:pointer;transition:background .3s}
+        .cta-form button:hover{background:#A8441E}
+
+        /* ─── FOOTER ─── */
+        .foot{padding:3rem 0;text-align:center;border-top:1px solid var(--line)}
+        .foot-brand{font-family:var(--sans);font-size:.6rem;text-transform:uppercase;letter-spacing:3px;color:var(--mute);margin-bottom:.4rem}
+        .foot-note{font-family:var(--serif);font-size:.82rem;font-style:italic;color:var(--mute)}
+
+        /* ─── REVEAL ─── */
+        .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+        .rv.on{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){
+            .sh{padding:0 1.25rem}
+            .hero-inner{padding:0 1.5rem 3.5rem}
+            .f-img{height:240px}
+            .pullquote{font-size:1.1rem;padding-left:1.2rem}
+            .price-box{flex-direction:column;align-items:flex-start;gap:.6rem}
+            .cta-form{flex-direction:column}
+            .cta-form input{border-right:1px solid #333;border-bottom:none}
+            .nav-links{gap:1.2rem}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <a href="/" class="nav-logo">Some Odd Road</a>
+    <ul class="nav-links">
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#subscribe">Subscribe</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <img class="hero-bg" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=2000&q=80" alt="Mountain road at dawn">
+    <div class="hero-inner">
+        <hr class="hero-rule">
+        <h1>Lost on some<br>odd road.</h1>
+        <p class="hero-tagline">Literary travel writing. Weekly dispatches from the roads less mapped — the odd detours, wrong turns, and beautiful accidents in between.</p>
+    </div>
+    <div class="scroll-cue">Scroll ↓</div>
+</section>
+
+<section id="stories">
+    <div class="sh">
+        <div class="sec-label">Latest Dispatches</div>
+        <hr class="hr">
+    </div>
+</section>
+
+<!-- ═══ FEATURED DISPATCH ═══ -->
+<article class="featured rv">
+    <div class="sh">
+        <div class="f-meta">
+            <span>22 April 2026</span><span class="dt"></span>
+            <span class="loc">Svaneti, Georgia</span><span class="dt"></span>
+            <span>6 min read</span><span class="dt"></span>
+            <span>Dispatch No. 042</span>
+        </div>
+        <h2>The Georgian Highway</h2>
+
+        <img class="f-img" src="https://images.unsplash.com/photo-1542820229-081e0c12af0b?w=1400&q=80" alt="Mountain valley road in the Caucasus, Georgia">
+        <div class="f-cap">The road into Upper Svaneti — somewhere between infrastructure and memory.</div>
+
+        <div class="prose">
+            <p>The air here tastes like rusted iron and old snow. We crossed into the valley just before dawn, the headlights cutting through a thick, obstinate fog that seemed to resent our intrusion. This isn't the sort of place you end up in by accident; it requires a deliberate sequence of poor navigational choices, a disregard for road-surface warnings, and the kind of optimism about fuel gauges that borders on theology.</p>
+
+            <p>To understand the local temperament, you must look at the architecture. The towers dot the landscape like stone sentinels — squat, humourless things built not for aesthetics but out of absolute, paranoid necessity. The kind of architecture that assumes history is cyclical, and the next cycle involves someone trying to burn your house down. In Svaneti, this assumption has proven correct often enough to justify the investment.</p>
+
+            <div class="pullquote">"The geography dictates the commerce. Here, you pay for the logistics of flour moving up a mountain, not the butter."</div>
+
+            <p>A black coffee costs you nothing if you know the right mechanic, or about 12 GEL if you decide to sit at the only café with a working espresso machine. The croissant is an entirely different negotiation.</p>
+
+            <div class="price-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 8h1a4 4 0 010 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+                <div>
+                    <div class="price-label">Local Price Index — Coffee &amp; Croissant</div>
+                    <div class="price-val"><em>12 GEL</em> — approx. $4.50 USD · Mestia, Upper Svaneti</div>
+                </div>
+            </div>
+
+            <p>We drove further up the ridge. The concept of a "road" became increasingly abstract, morphing from broken concrete to packed dirt, and finally to a suggestion of a path worn into the rock by generations of stubborn cattle. The rental agreement said nothing about this. The rental agreement assumed you would remain on surfaces that had been paved at some point in the post-Soviet era.</p>
+
+            <p>The map shows a track. The locals say it washed out in October, leaving the infrastructure in a state of terminal disrepair. My last visit here was in 2018. The roads are a fraction better, but the isolation remains absolute. Cell service is a rumour. Wi-Fi is a philosophical concept. The only reliable signal is the one the mountains send every evening when the clouds descend and the temperature drops twenty degrees in an hour: go inside, or become a cautionary anecdote.</p>
+        </div>
+
+        <div class="dispatch-end">
+            <span>—</span>
+            <span>End of dispatch — 1,340 words</span>
+        </div>
+    </div>
+</article>
+
+<!-- ═══ STORY FEED ═══ -->
+<section>
+    <div class="sh">
+        <article class="card rv">
+            <div class="c-meta">
+                <span>15 April 2026</span><span class="dt"></span>
+                <span class="loc">Fez Medina, Morocco</span><span class="dt"></span>
+                <span>7 min read</span>
+            </div>
+            <h3>Nine Thousand Alleys</h3>
+            <p class="c-ex">The medina doesn't have streets. It has intentions. Each passage narrows by degrees until you're turning sideways past a donkey carrying propane tanks, and the GPS has given up entirely, showing you as a blue dot floating in beige nothing.</p>
+            <div class="c-foot">
+                <span class="c-tag">Story</span>
+                <span>1,210 words</span>
+                <span class="c-read">Read dispatch →</span>
+            </div>
+        </article>
+
+        <article class="card rv">
+            <div class="c-meta">
+                <span>8 April 2026</span><span class="dt"></span>
+                <span class="loc">Ruta 40, Patagonia</span><span class="dt"></span>
+                <span>5 min read</span>
+            </div>
+            <h3>The Wind Tax</h3>
+            <p class="c-ex">Nobody tells you about the wind. Not the guidebook, not the Argentine at the petrol station who sold you the last empanada. The wind in Patagonia is not weather. It is infrastructure. It is a permanent architectural feature of the air.</p>
+            <div class="c-foot">
+                <span class="c-tag">Film</span>
+                <span>1,480 words</span>
+                <span class="c-read">Read dispatch →</span>
+            </div>
+        </article>
+
+        <article class="card rv">
+            <div class="c-meta">
+                <span>1 April 2026</span><span class="dt"></span>
+                <span class="loc">Luang Prabang, Laos</span><span class="dt"></span>
+                <span>8 min read</span>
+            </div>
+            <h3>The Alms Economy</h3>
+            <p class="c-ex">At 5:30 a.m. the monks file out in a line of saffron that looks like the town is slowly haemorrhaging sunrise. The tourists crouch with their cameras. The locals kneel with their rice. The distinction tells you everything.</p>
+            <div class="c-foot">
+                <span class="c-tag">Story</span>
+                <span>1,105 words</span>
+                <span class="c-read">Read dispatch →</span>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- ═══ SUBSCRIBE ═══ -->
+<section class="cta" id="subscribe">
+    <div class="sh">
+        <h3>For the price of a black coffee<br>and a croissant.</h3>
+        <p>One dispatch a week. No spam, no algorithms, no listicles. Just <span class="hl">words from the road</span> — delivered every Tuesday.</p>
+        <form class="cta-form" onsubmit="event.preventDefault()">
+            <input type="email" id="sub-email" placeholder="your@email.com" required>
+            <button type="submit" id="sub-btn">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<footer class="foot">
+    <div class="sh">
+        <div class="foot-brand">someoddroad.org</div>
+        <div class="foot-note">Lost on some odd road — since 2026</div>
+    </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.getElementById('sub-btn').addEventListener('click',()=>{
+    const i=document.getElementById('sub-email'),b=document.getElementById('sub-btn');
+    if(i.value&&i.checkValidity()){b.textContent='Subscribed';b.style.background='#2C6B4F';b.style.borderColor='#2C6B4F';i.disabled=b.disabled=true}
+});
+</script>
+</body>
+</html>
