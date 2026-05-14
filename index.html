@@ -92,6 +92,29 @@
             font-weight: 500;
         }
 
+        .tab-button.archived {
+            opacity: 0.42;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .tab-button.archived::before {
+            content: '~ ';
+            opacity: 0.7;
+        }
+
+        .tab-button.archived:hover {
+            opacity: 0.85;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .tab-button.archived.active {
+            opacity: 1;
+            font-style: italic;
+            color: var(--accent);
+        }
+
         .toolbar-actions {
             display: flex;
             gap: 0.5rem;
@@ -187,15 +210,20 @@
         </div>
 
         <nav class="design-tabs" id="designTabs">
-            <button class="tab-button active" data-file="test.html">v1</button>
-            <button class="tab-button" data-file="v2.html">v2</button>
-            <button class="tab-button" data-file="v3.html">v3</button>
-            <button class="tab-button" data-file="v4.html">v4</button>
-            <button class="tab-button" data-file="v5.html">v5</button>
+            <button class="tab-button archived active" data-file="test.html" title="Archived">v1</button>
+            <button class="tab-button archived" data-file="v2.html" title="Archived">v2</button>
+            <button class="tab-button archived" data-file="v3.html" title="Archived">v3</button>
+            <button class="tab-button archived" data-file="v4.html" title="Archived">v4</button>
+            <button class="tab-button archived" data-file="v5.html" title="Archived">v5</button>
             <button class="tab-button" data-file="v6.html">v6</button>
-            <button class="tab-button" data-file="v7.html">v7</button>
-            <button class="tab-button" data-file="v8.html">v8</button>
-            <button class="tab-button" data-file="v9.html">v9</button>
+            <button class="tab-button" data-file="v6.1.html">v6.1</button>
+            <button class="tab-button" data-file="v6.2.html">v6.2</button>
+            <button class="tab-button" data-file="v6.3.html">v6.3</button>
+            <button class="tab-button" data-file="v6.4.html">v6.4</button>
+            <button class="tab-button archived" data-file="v7.html" title="Archived">v7</button>
+            <button class="tab-button archived" data-file="v8.html" title="Archived">v8</button>
+            <button class="tab-button archived" data-file="v9.html" title="Archived">v9</button>
+            <button class="tab-button archived" data-file="v10.html" title="Archived">v10</button>
         </nav>
 
         <div class="toolbar-actions">

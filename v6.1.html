@@ -19,7 +19,12 @@
             --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
         }
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scrollbar-width:thin;scrollbar-color:var(--ink) var(--bone-dk)}
+        ::-webkit-scrollbar{width:10px;height:10px}
+        ::-webkit-scrollbar-track{background:var(--bone-dk)}
+        ::-webkit-scrollbar-thumb{background:var(--ink);border:2px solid var(--bone-dk);border-radius:0}
+        ::-webkit-scrollbar-thumb:hover{background:var(--blood)}
+        ::-webkit-scrollbar-corner{background:var(--bone-dk)}
         body{background:var(--bone);color:var(--ink);font-family:var(--serif);font-weight:400;line-height:1.7;overflow-x:hidden;position:relative}
         ::selection{background:var(--blood);color:var(--bone)}
         a{color:inherit;text-decoration:none}
@@ -39,23 +44,62 @@
         .shell{max-width:980px;margin:0 auto;padding:0 2.5rem;position:relative}
         .measure{max-width:620px;margin:0 auto}
 
-        /* RUNNING HEAD */
-        .runhead{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bone);border-bottom:1px solid var(--ink)}
-        .runhead-inner{max-width:980px;margin:0 auto;padding:.65rem 2.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--stamp);font-size:.7rem;color:var(--ink);text-transform:uppercase;letter-spacing:1.5px}
-        .runhead .vol{color:var(--blood)}
-        .runhead .cen{text-align:center;flex:1}
-        .runhead .nav{display:flex;gap:1.3rem}
-        .runhead .nav a{opacity:.7;transition:opacity .3s}
-        .runhead .nav a:hover{opacity:1;color:var(--blood)}
+        /* ============ DOCKED NAMEPLATE (pinned on scroll) ============ */
+        .dock{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bone);border-bottom:1px solid var(--ink);transform:translateY(-100%);transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform}
+        .dock.on{transform:translateY(0)}
+        .dock::before{content:'';position:absolute;left:0;right:0;bottom:-4px;height:3px;background:var(--ink);opacity:.85}
+        .dock-inner{max-width:980px;margin:0 auto;padding:.55rem 2.5rem;display:grid;grid-template-columns:1fr auto 1fr;gap:1.4rem;align-items:center}
+        .dock-vol{font-family:var(--stamp);font-size:.62rem;color:var(--blood);text-transform:uppercase;letter-spacing:1.8px;white-space:nowrap}
+        .dock-title{font-family:var(--serif);font-weight:500;font-variant:small-caps;font-size:1.05rem;color:var(--ink);letter-spacing:.005em;line-height:1;text-align:center;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:.04em}
+        .dock-title .o-mini{display:inline-block;width:.95em;height:.95em;position:relative;top:.01em;margin:0 -.02em}
+        .dock-nav{display:flex;gap:1.3rem;font-family:var(--stamp);font-size:.6rem;text-transform:uppercase;letter-spacing:1.8px;justify-content:flex-end}
+        .dock-nav a{opacity:.7;transition:opacity .3s,color .3s}
+        .dock-nav a:hover{opacity:1;color:var(--blood)}
 
-        /* MASTHEAD */
-        .masthead{padding:8.5rem 0 2rem;text-align:center;position:relative}
+        /* ============ MASTHEAD (page-top nameplate) ============ */
+        .masthead{padding:3.2rem 0 2rem;text-align:center;position:relative}
         .mast-rule-hvy{height:5px;background:var(--ink);margin-bottom:.7rem}
         .mast-rule-lt{height:1px;background:var(--ink);margin:.7rem 0}
-        .mast-title{font-family:var(--serif);font-weight:500;font-style:normal;font-size:clamp(3.4rem,8vw,6.2rem);letter-spacing:-.02em;line-height:.95;text-transform:none;padding:.5rem 0 .4rem;font-variant:small-caps;color:var(--ink)}
+        .mast-title{font-family:var(--serif);font-weight:500;font-style:normal;font-size:clamp(3.4rem,8vw,6.2rem);letter-spacing:-.005em;line-height:.95;text-transform:none;padding:.5rem 0 .4rem;font-variant:small-caps;color:var(--ink);display:flex;justify-content:center;align-items:center;flex-wrap:nowrap;gap:.25em}
+        .mast-title .word{display:inline-flex;align-items:center;letter-spacing:.005em}
+        .mast-title .odd{display:inline-flex;align-items:center;letter-spacing:-.02em}
+        .mast-title .odd-stamp{display:inline-block;width:1.04em;height:1.04em;position:relative;top:-.02em;margin:0 -.04em}
+        .mast-title .odd-stamp svg{width:100%;height:100%;display:block;overflow:visible}
         .mast-sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.05rem;letter-spacing:.005em;color:var(--ash);padding:.2rem 0 .4rem}
         .mast-dateline{display:flex;justify-content:space-between;align-items:center;font-family:var(--stamp);font-size:.66rem;text-transform:uppercase;letter-spacing:2px;color:var(--ash);padding:.4rem 0}
         .mast-dateline .mid{color:var(--blood)}
+
+        /* ============ STAMPS (shared) ============ */
+        .stamp-svg{display:block;color:var(--blood);overflow:visible}
+        .stamp-svg .ink-grp{mix-blend-mode:multiply;filter:url(#rough)}
+        .stamp-svg .ring,.stamp-svg .road-body{fill:none;stroke:var(--blood)}
+        .stamp-svg text{fill:var(--blood);font-family:var(--stamp)}
+        .stamp-svg .ring-outer{stroke-width:2.5}
+        .stamp-svg .ring-inner{stroke-width:.9}
+        .stamp-svg .road-body{stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:280;stroke-dashoffset:280;animation:drawRoad 2.4s cubic-bezier(.55,.05,.2,1) .55s forwards}
+        .stamp-svg .road-lane{fill:none;stroke:var(--bone-dk);stroke-width:1.7;stroke-dasharray:6,9;stroke-dashoffset:0;stroke-linecap:butt;opacity:0;animation:fadeRoad .9s ease 2.85s forwards, slideAnts 5.5s linear 3s infinite}
+        @keyframes drawRoad{to{stroke-dashoffset:0}}
+        @keyframes fadeRoad{to{opacity:1}}
+        @keyframes slideAnts{to{stroke-dashoffset:-15}}
+
+        /* Hero stamp — full size, top-right of hero photo (static, no draw-on) */
+        .stamp-hero{position:absolute;top:1.6rem;right:1.6rem;width:148px;height:148px;z-index:3;transform:rotate(-9deg);opacity:.92;pointer-events:none}
+        .stamp-hero .road-body{animation:none;stroke-dashoffset:0}
+        .stamp-hero .road-lane{animation:none;opacity:.95}
+
+        /* "O" stamp — simplified (no arc text, animation still plays) */
+        .odd-stamp .stamp-svg{transform:rotate(-6deg);transform-origin:center}
+        .o-mini .stamp-svg{transform:rotate(-5deg);transform-origin:center;width:100%;height:100%;display:block;overflow:visible}
+        .o-mini .road-body{animation:none;stroke-dashoffset:0;stroke-width:14}
+        .o-mini .road-lane{animation:none;opacity:.85}
+
+        /* Ledger row stamp — small, sits in first column */
+        .lx-stamp{display:block;width:52px;height:52px;margin:0 auto;transform:rotate(-7deg)}
+        .lx-stamp .stamp-svg{width:100%;height:100%;display:block;overflow:visible}
+        .lx-stamp .road-body{animation:none;stroke-dashoffset:0;stroke-width:13}
+        .lx-stamp .road-lane{animation:none;opacity:.9}
+        tr:nth-child(2) .lx-stamp{transform:rotate(5deg)}
+        tr:nth-child(3) .lx-stamp{transform:rotate(-12deg)}
 
         /* HERO PHOTO */
         .hero{position:relative;margin:2.5rem 0 3rem;padding:0}
@@ -67,12 +111,6 @@
             linear-gradient(0deg, rgba(11,10,8,.35) 0%, transparent 50%);
             pointer-events:none;mix-blend-mode:multiply}
         .hero-frame::before{content:'';position:absolute;inset:0;background:var(--blood);mix-blend-mode:multiply;opacity:.08;pointer-events:none;z-index:1}
-
-        /* STAMP */
-        .stamp{position:absolute;top:2rem;right:1.5rem;width:140px;height:140px;z-index:3;transform:rotate(-11deg);opacity:.9;filter:url(#rough);mix-blend-mode:multiply;pointer-events:none}
-        .stamp-mobile{display:none}
-        .stamp text{fill:var(--blood);font-family:var(--stamp)}
-        .stamp circle{stroke:var(--blood);fill:none}
 
         .hero-cap{font-family:var(--stamp);font-size:.66rem;color:var(--ash);text-transform:uppercase;letter-spacing:2px;padding:.9rem 0 0;display:flex;align-items:center;gap:.9rem}
         .hero-cap::before{content:'';width:22px;height:1px;background:var(--ink)}
@@ -111,7 +149,7 @@
         .pullquote .attr{display:block;font-family:var(--stamp);font-style:normal;font-size:.7rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--ash);margin-top:.9rem;font-weight:400}
         .pullquote .attr::before{content:'— '}
 
-        /* PRICE (terse card) */
+        /* PRICE */
         .price{margin:3rem 0;padding:1.4rem 1.6rem 1.4rem 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:auto 1fr auto;gap:1.6rem;align-items:center}
         .price-label{font-family:var(--stamp);font-size:.64rem;text-transform:uppercase;letter-spacing:3px;color:var(--blood)}
         .price-body{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--ink);line-height:1.5}
@@ -123,13 +161,13 @@
         .end-stamp::before,.end-stamp::after{content:'';flex:0 1 80px;height:1px;background:var(--ink)}
         .end-stamp em{font-style:normal;color:var(--blood)}
 
-        /* WATERMARKS (coffee rings etc) */
+        /* WATERMARKS */
         .watermark{position:absolute;width:180px;height:180px;opacity:.14;pointer-events:none;z-index:0}
         .wm-1{top:22%;left:-60px;transform:rotate(6deg)}
         .wm-2{bottom:8%;right:-40px;transform:rotate(-18deg);width:150px;height:150px}
         .watermark circle{fill:none;stroke:var(--ash);stroke-width:2}
 
-        /* LEDGER */
+        /* ============ LEDGER (table layout, stamp in col 1) ============ */
         .ledger{padding:4rem 0 4rem;border-top:4px solid var(--ink);position:relative;margin-top:3rem}
         .ledger-head{display:flex;justify-content:space-between;align-items:baseline;padding:1rem 0 1.8rem;font-family:var(--stamp);font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--ink)}
         .ledger-head .t{color:var(--blood);font-size:.8rem;letter-spacing:4px}
@@ -137,14 +175,20 @@
 
         .ledger-table{width:100%;border-collapse:collapse;font-family:var(--stamp);font-size:.78rem}
         .ledger-table thead th{text-align:left;font-weight:400;text-transform:uppercase;letter-spacing:2px;color:var(--mute);font-size:.62rem;padding:.7rem 1rem;border-bottom:1px solid var(--ink);background:transparent}
+        .ledger-table thead th:first-child{text-align:center}
         .ledger-table thead th:last-child{text-align:right}
         .ledger-table tbody tr{border-bottom:1px solid var(--bone-dk);cursor:pointer;transition:background .2s}
         .ledger-table tbody tr:hover{background:rgba(142,28,20,.05)}
         .ledger-table tbody tr:hover .lx-title{color:var(--blood)}
         .ledger-table tbody tr:hover .lx-read{color:var(--blood);letter-spacing:3px}
-        .ledger-table td{padding:1.3rem 1rem;vertical-align:top;color:var(--ink)}
+        .ledger-table tbody tr:hover .lx-stamp{transform:rotate(0) scale(1.05)}
+        .ledger-table tbody tr:hover:nth-child(2) .lx-stamp{transform:rotate(0) scale(1.05)}
+        .ledger-table tbody tr:hover:nth-child(3) .lx-stamp{transform:rotate(0) scale(1.05)}
+        .ledger-table td{padding:1.4rem 1rem;vertical-align:middle;color:var(--ink)}
+        .ledger-table td:first-child{padding:1.4rem .8rem;width:78px}
         .ledger-table td:last-child{text-align:right}
-        .lx-no{color:var(--blood);font-size:.9rem;letter-spacing:1.5px}
+        .lx-stamp{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+        .lx-no{color:var(--blood);font-size:.78rem;letter-spacing:1.5px;display:block;text-align:center;margin-top:.4rem}
         .lx-date{color:var(--ash);font-size:.7rem;letter-spacing:1.2px}
         .lx-loc{font-family:var(--stamp);color:var(--ink);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase}
         .lx-title{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--ink);font-weight:400;line-height:1.25;margin-top:.3rem;transition:color .25s;letter-spacing:-.01em}
@@ -182,20 +226,21 @@
         .rv.on{opacity:1;transform:translateY(0)}
 
         /* MOBILE */
-        @media(max-width:720px){
-            .runhead .cen{display:none}
-            .runhead .nav{gap:.9rem}
-            .runhead-inner{padding:.6rem 1.25rem;font-size:.62rem}
+        @media(max-width:760px){
+            .dock-inner{padding:.55rem 1.25rem;grid-template-columns:auto 1fr;gap:.8rem}
+            .dock-title{display:none}
             .shell{padding:0 1.25rem}
-            .masthead{padding:6rem 0 1.5rem}
+            .masthead{padding:2.4rem 0 1.5rem}
             .hero-frame{height:360px}
-            .stamp{width:100px;height:100px;top:1rem;right:.7rem}
+            .stamp-hero{width:104px;height:104px;top:.8rem;right:.8rem}
             .prose p{font-size:1.06rem}
             .pullquote{font-size:1.22rem;padding-left:1.2rem}
             .price{grid-template-columns:1fr;gap:.6rem;padding:1.4rem 0}
             .ledger-table thead{display:none}
             .ledger-table td{padding:1rem 0;display:block;text-align:left !important}
+            .ledger-table td:first-child{padding:1rem 0;width:auto;display:flex;align-items:center;gap:1rem}
             .ledger-table tbody tr{border-bottom:1px solid var(--bone-dk);padding:1rem 0}
+            .lx-no{display:inline-block;text-align:left;margin-top:0}
             .lx-title{font-size:1.18rem}
             .sub-form{flex-direction:column}
             .sub-form input{border-right:1px solid rgba(235,227,209,.22);border-bottom:none}
@@ -214,32 +259,69 @@
         </filter>
         <path id="arc-top" d="M 18 100 A 82 82 0 0 1 182 100"/>
         <path id="arc-bot" d="M 182 100 A 82 82 0 0 1 18 100"/>
+        <!-- Minimal stamp (rings + road) for O-replacements and ledger cells -->
+        <symbol id="road-stamp-mini" viewBox="0 0 200 200">
+            <g class="ink-grp">
+                <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                <path class="road-body" d="M 100,32 C 56,58 144,92 100,116 C 56,140 144,168 100,170"/>
+            </g>
+            <path class="road-lane" d="M 100,32 C 56,58 144,92 100,116 C 56,140 144,168 100,170"/>
+        </symbol>
     </defs>
 </svg>
 
 <div class="grain"></div>
 <div class="fold"></div>
 
-<!-- RUNNING HEAD -->
-<header class="runhead">
-    <div class="runhead-inner">
-        <span><span class="vol">Vol. I · No. 042</span></span>
-        <span class="cen">Some Odd Road — Field Notes, Roads Less Mapped</span>
-        <nav class="nav">
+<!-- ============ DOCKED NAMEPLATE (slides in on scroll) ============ -->
+<div class="dock" id="dock" aria-hidden="true">
+    <div class="dock-inner">
+        <span class="dock-vol">Vol. I · No. 042</span>
+        <span class="dock-title">
+            Some<span style="display:inline-flex;align-items:center;letter-spacing:-.02em;margin:0 .05em">
+                <span class="o-mini" aria-label="O">
+                    <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
+                        <use href="#road-stamp-mini"/>
+                    </svg>
+                </span>dd</span>Road
+        </span>
+        <nav class="dock-nav">
             <a href="#dispatch">Dispatch</a>
             <a href="#ledger">Ledger</a>
             <a href="#subscribe">Subscribe</a>
         </nav>
     </div>
-</header>
+</div>
 
 <main class="shell">
 
-    <!-- MASTHEAD -->
-    <section class="masthead">
+    <!-- ============ MASTHEAD (page-top nameplate) ============ -->
+    <section class="masthead" id="masthead">
         <div class="mast-rule-hvy"></div>
         <div class="mast-rule-lt"></div>
-        <h1 class="mast-title">Some Odd Road</h1>
+        <h1 class="mast-title">
+            <span class="word">Some</span>
+            <span class="odd">
+                <span class="odd-stamp" role="img" aria-label="O">
+                    <svg class="stamp-svg" viewBox="0 0 200 200">
+                        <g class="ink-grp">
+                            <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                            <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                            <text font-size="12.5" letter-spacing="4.2">
+                                <textPath href="#arc-top" startOffset="3%">SOME ODD ROAD · FIELD NOTE</textPath>
+                            </text>
+                            <text font-size="9.5" letter-spacing="3.2">
+                                <textPath href="#arc-bot" startOffset="3%">N° 042 · FILED BY HAND · MMXXVI</textPath>
+                            </text>
+                            <path class="road-body" d="M 100,32 C 56,58 144,92 100,116 C 56,140 144,168 100,170"/>
+                        </g>
+                        <path class="road-lane" d="M 100,32 C 56,58 144,92 100,116 C 56,140 144,168 100,170"/>
+                    </svg>
+                </span>dd
+            </span>
+            <span class="word">Road</span>
+        </h1>
         <div class="mast-sub">Sketches from where empires, trade, and memory overlap</div>
         <div class="mast-rule-lt"></div>
         <div class="mast-dateline">
@@ -254,16 +336,18 @@
     <section class="hero" id="dispatch">
         <div class="hero-frame rv" id="heroFrame">
             <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1600&q=80" alt="Mountain road through misty Svaneti valley">
-            <svg class="stamp" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="90" stroke-width="2.5"/>
-                <circle cx="100" cy="100" r="78" stroke-width=".9"/>
-                <text font-size="14" letter-spacing="4.5">
-                    <textPath href="#arc-top" startOffset="6%">FIELD NOTE · FIELD NOTE</textPath>
-                </text>
-                <text font-size="10" letter-spacing="3.5">
-                    <textPath href="#arc-bot" startOffset="4%">FILED BY HAND · MMXXVI</textPath>
-                </text>
-                <text x="100" y="113" text-anchor="middle" font-size="42" letter-spacing="1">042</text>
+            <svg class="stamp-svg stamp-hero" viewBox="0 0 200 200" aria-hidden="true">
+                <g class="ink-grp">
+                    <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                    <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                    <text font-size="14" letter-spacing="4.5">
+                        <textPath href="#arc-top" startOffset="6%">FIELD NOTE · FIELD NOTE</textPath>
+                    </text>
+                    <text font-size="10" letter-spacing="3.5">
+                        <textPath href="#arc-bot" startOffset="4%">FILED BY HAND · MMXXVI</textPath>
+                    </text>
+                    <text x="100" y="113" text-anchor="middle" font-size="42" letter-spacing="1">042</text>
+                </g>
             </svg>
         </div>
         <div class="hero-cap">Fig. 01 — The road into Upper Svaneti, before the fog lifted.</div>
@@ -276,9 +360,6 @@
 
     <!-- ARTICLE -->
     <article class="article">
-        <svg class="watermark wm-1" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="78"/></svg>
-        <svg class="watermark wm-2" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="94"/></svg>
-
         <div class="measure">
             <div class="eyebrow rv">The Dispatch</div>
             <h2 class="title rv">The Georgian Highway</h2>
@@ -334,7 +415,7 @@
         </div>
     </article>
 
-    <!-- LEDGER -->
+    <!-- ============ LEDGER (table, stamp glyph in column 1) ============ -->
     <section class="ledger" id="ledger">
         <div class="ledger-head">
             <span class="t">The Ledger</span>
@@ -345,9 +426,9 @@
         <table class="ledger-table">
             <thead>
                 <tr>
-                    <th style="width:70px">No.</th>
+                    <th style="width:78px">Stamp</th>
                     <th style="width:110px">Filed</th>
-                    <th style="width:180px">Dateline</th>
+                    <th style="width:200px">Dateline</th>
                     <th>Title</th>
                     <th style="width:80px">Ext.</th>
                     <th style="width:90px">Read</th>
@@ -355,7 +436,19 @@
             </thead>
             <tbody>
                 <tr class="rv">
-                    <td><span class="lx-no">041</span></td>
+                    <td>
+                        <span class="lx-stamp">
+                            <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
+                                <g class="ink-grp">
+                                    <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                                    <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                                    <text x="100" y="76" text-anchor="middle" font-size="22" letter-spacing="3">N°</text>
+                                    <text x="100" y="142" text-anchor="middle" font-size="62" letter-spacing="2">041</text>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="lx-no">N° 041</span>
+                    </td>
                     <td><span class="lx-date">15 IV MMXXVI</span></td>
                     <td><span class="lx-loc">Fez Medina, Morocco</span></td>
                     <td>
@@ -366,7 +459,19 @@
                     <td><span class="lx-read">Read →</span></td>
                 </tr>
                 <tr class="rv">
-                    <td><span class="lx-no">040</span></td>
+                    <td>
+                        <span class="lx-stamp">
+                            <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
+                                <g class="ink-grp">
+                                    <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                                    <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                                    <text x="100" y="76" text-anchor="middle" font-size="22" letter-spacing="3">N°</text>
+                                    <text x="100" y="142" text-anchor="middle" font-size="62" letter-spacing="2">040</text>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="lx-no">N° 040</span>
+                    </td>
                     <td><span class="lx-date">08 IV MMXXVI</span></td>
                     <td><span class="lx-loc">Ruta 40, Patagonia</span></td>
                     <td>
@@ -377,7 +482,19 @@
                     <td><span class="lx-read">Read →</span></td>
                 </tr>
                 <tr class="rv">
-                    <td><span class="lx-no">039</span></td>
+                    <td>
+                        <span class="lx-stamp">
+                            <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
+                                <g class="ink-grp">
+                                    <circle class="ring ring-outer" cx="100" cy="100" r="90"/>
+                                    <circle class="ring ring-inner" cx="100" cy="100" r="78"/>
+                                    <text x="100" y="76" text-anchor="middle" font-size="22" letter-spacing="3">N°</text>
+                                    <text x="100" y="142" text-anchor="middle" font-size="62" letter-spacing="2">039</text>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="lx-no">N° 039</span>
+                    </td>
                     <td><span class="lx-date">01 IV MMXXVI</span></td>
                     <td><span class="lx-loc">Luang Prabang, Laos</span></td>
                     <td>
@@ -396,8 +513,8 @@
 <section class="sub" id="subscribe">
     <div class="sub-inner">
         <div class="sub-eyebrow">The Standing Order</div>
-        <h3>One dispatch. One week. <em>No performance.</em></h3>
-        <p class="pitch">If you hate it, leave. If you love it, don't tell me. No spam. No tracking. No listicles. Tuesdays.</p>
+        <h3>One dispatch. One week.</h3>
+        <p class="pitch">If you hate it, leave. If you love it, don't tell me. No spam. No tracking. No listicles.</p>
         <form class="sub-form" onsubmit="event.preventDefault()">
             <input type="email" id="sub-email" placeholder="your@email.com" required>
             <button type="submit" id="sub-btn">Subscribe</button>
@@ -406,50 +523,46 @@
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="foot">
-    <div class="shell">
-        <div class="foot-quote">"The world is a fine place and worth fighting for, and hated very much to leave it."</div>
-        <div class="foot-inner">
-            Some Odd Road · someoddroad.org<br>
-            <span class="dim">© MMXXVI — Filed from a bar with bad lighting — Posted without comment</span>
-        </div>
-    </div>
-</footer>
-
 <script>
     // Reveal on scroll
-    const obs=new IntersectionObserver(e=>{
-        e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');obs.unobserve(x.target)}})
-    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+    const obs = new IntersectionObserver(e => {
+        e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('on'); obs.unobserve(x.target); } });
+    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // Docked nameplate on scroll
+    const dock = document.getElementById('dock');
+    const masthead = document.getElementById('masthead');
+    const dockObs = new IntersectionObserver(e => {
+        e.forEach(x => dock.classList.toggle('on', !x.isIntersecting && x.boundingClientRect.top < 0));
+    }, { threshold: 0 });
+    dockObs.observe(masthead);
 
     // Typewriter lead
-    const tw=document.getElementById('typewriter');
-    const text='The road into Svaneti is not a road. It is a dare.';
-    let i=0;
-    function type(){
-        if(i<=text.length){
-            tw.innerHTML=text.slice(0,i)+'<span class="caret"></span>';
-            const ch=text[i-1];
-            const delay=ch==='.'||ch===','?260:(Math.random()*45+38);
+    const tw = document.getElementById('typewriter');
+    const text = 'The road into Svaneti is not a road. It is a dare.';
+    let i = 0;
+    function type() {
+        if (i <= text.length) {
+            tw.innerHTML = text.slice(0, i) + '<span class="caret"></span>';
+            const ch = text[i - 1];
+            const delay = ch === '.' || ch === ',' ? 260 : (Math.random() * 45 + 38);
             i++;
-            setTimeout(type,delay);
+            setTimeout(type, delay);
         }
     }
-    // Start typewriter when cold-open enters view
-    const coObs=new IntersectionObserver(e=>{
-        e.forEach(x=>{if(x.isIntersecting){type();coObs.disconnect()}})
-    },{threshold:.4});
+    const coObs = new IntersectionObserver(e => {
+        e.forEach(x => { if (x.isIntersecting) { type(); coObs.disconnect(); } });
+    }, { threshold: .4 });
     coObs.observe(document.querySelector('.cold-open'));
 
     // Subscribe
-    document.getElementById('sub-btn').addEventListener('click',()=>{
-        const i=document.getElementById('sub-email'),b=document.getElementById('sub-btn');
-        if(i.value&&i.checkValidity()){
-            b.textContent='On the list';
-            b.style.background='#0B0A08';b.style.borderColor='#0B0A08';
-            i.disabled=b.disabled=true;
+    document.getElementById('sub-btn').addEventListener('click', () => {
+        const i = document.getElementById('sub-email'), b = document.getElementById('sub-btn');
+        if (i.value && i.checkValidity()) {
+            b.textContent = 'On the list';
+            b.style.background = '#0B0A08'; b.style.borderColor = '#0B0A08';
+            i.disabled = b.disabled = true;
         }
     });
 </script>
