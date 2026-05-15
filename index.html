@@ -20,7 +20,6 @@
             --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        /* ── Reset & Base ── */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
@@ -63,8 +62,40 @@
 
         .design-tabs {
             display: flex;
-            gap: 0.25rem;
+            align-items: center;
+            gap: 0.75rem;
             flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .tab-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-group-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            padding-right: 0.25rem;
+        }
+
+        .tab-group.review .tab-group-label {
+            color: var(--accent);
+        }
+
+        .tab-group-divider {
+            width: 1px;
+            height: 22px;
+            background: var(--border);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.25rem;
         }
 
         .tab-button {
@@ -74,45 +105,43 @@
             border-radius: 4px;
             font-family: var(--sans);
             font-size: 13px;
-            font-weight: 400;
-            color: var(--text-secondary);
+            font-weight: 500;
+            color: var(--text);
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
         .tab-button:hover {
-            color: var(--text);
             background: var(--bg);
+            border-color: var(--border);
         }
 
         .tab-button.active {
-            color: var(--accent);
-            background: var(--bg);
-            border-color: var(--border);
-            font-weight: 500;
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
         .tab-button.archived {
-            opacity: 0.42;
-            font-style: italic;
+            padding: 0.35rem 0.6rem;
+            font-size: 12px;
+            font-weight: 400;
             color: var(--text-muted);
-        }
-
-        .tab-button.archived::before {
-            content: '~ ';
             opacity: 0.7;
         }
 
         .tab-button.archived:hover {
-            opacity: 0.85;
-            font-style: italic;
+            opacity: 1;
             color: var(--text-secondary);
+            background: var(--bg);
+            border-color: var(--border-light);
         }
 
         .tab-button.archived.active {
             opacity: 1;
-            font-style: italic;
-            color: var(--accent);
+            color: #fff;
+            background: var(--text-secondary);
+            border-color: var(--text-secondary);
         }
 
         .toolbar-actions {
@@ -170,7 +199,6 @@
             background: var(--bg);
         }
 
-        /* ── Responsive ── */
         @media (max-width: 720px) {
             .toolbar {
                 padding: 0.625rem 0.875rem;
@@ -178,15 +206,16 @@
                 flex-wrap: wrap;
             }
 
-            .toolbar-title-muted {
-                display: none;
-            }
+            .toolbar-title-muted { display: none; }
 
             .design-tabs {
                 order: 3;
                 width: 100%;
                 overflow-x: auto;
+                flex-wrap: nowrap;
             }
+
+            .tab-group-divider { display: none; }
 
             .tab-button {
                 padding: 0.4rem 0.75rem;
@@ -210,24 +239,37 @@
         </div>
 
         <nav class="design-tabs" id="designTabs">
-            <button class="tab-button archived active" data-file="test.html" title="Archived">v1</button>
-            <button class="tab-button archived" data-file="v2.html" title="Archived">v2</button>
-            <button class="tab-button archived" data-file="v3.html" title="Archived">v3</button>
-            <button class="tab-button archived" data-file="v4.html" title="Archived">v4</button>
-            <button class="tab-button archived" data-file="v5.html" title="Archived">v5</button>
-            <button class="tab-button" data-file="v6.html">v6</button>
-            <button class="tab-button" data-file="v6.1.html">v6.1</button>
-            <button class="tab-button" data-file="v6.2.html">v6.2</button>
-            <button class="tab-button" data-file="v6.3.html">v6.3</button>
-            <button class="tab-button" data-file="v6.4.html">v6.4</button>
-            <button class="tab-button archived" data-file="v7.html" title="Archived">v7</button>
-            <button class="tab-button archived" data-file="v8.html" title="Archived">v8</button>
-            <button class="tab-button archived" data-file="v9.html" title="Archived">v9</button>
-            <button class="tab-button archived" data-file="v10.html" title="Archived">v10</button>
+            <div class="tab-group review">
+                <span class="tab-group-label">For review</span>
+                <div class="tab-buttons">
+                    <button class="tab-button" data-file="v6.html">v6</button>
+                    <button class="tab-button" data-file="v6.1.html">v6.1</button>
+                    <button class="tab-button" data-file="v6.2.html">v6.2</button>
+                    <button class="tab-button" data-file="v6.3.html">v6.3</button>
+                    <button class="tab-button active" data-file="v6.4.html">v6.4</button>
+                </div>
+            </div>
+
+            <div class="tab-group-divider"></div>
+
+            <div class="tab-group">
+                <span class="tab-group-label">Archive</span>
+                <div class="tab-buttons">
+                    <button class="tab-button archived" data-file="test.html" title="Archived">v1</button>
+                    <button class="tab-button archived" data-file="v2.html" title="Archived">v2</button>
+                    <button class="tab-button archived" data-file="v3.html" title="Archived">v3</button>
+                    <button class="tab-button archived" data-file="v4.html" title="Archived">v4</button>
+                    <button class="tab-button archived" data-file="v5.html" title="Archived">v5</button>
+                    <button class="tab-button archived" data-file="v7.html" title="Archived">v7</button>
+                    <button class="tab-button archived" data-file="v8.html" title="Archived">v8</button>
+                    <button class="tab-button archived" data-file="v9.html" title="Archived">v9</button>
+                    <button class="tab-button archived" data-file="v10.html" title="Archived">v10</button>
+                </div>
+            </div>
         </nav>
 
         <div class="toolbar-actions">
-            <a class="action-button" id="openNewTab" href="test.html" target="_blank" rel="noopener">Open in new tab</a>
+            <a class="action-button" id="openNewTab" href="v6.4.html" target="_blank" rel="noopener">Open in new tab</a>
             <button class="action-button primary" id="reloadFrame" type="button">Reload</button>
         </div>
     </header>
@@ -236,82 +278,55 @@
         <iframe
             id="viewportFrame"
             class="viewport-frame"
-            src="test.html"
+            src="v6.4.html"
             title="Design preview"></iframe>
     </main>
 
     <script>
-        // ── Elements ──
         const tabsContainer = document.getElementById('designTabs');
         const tabButtons = tabsContainer.querySelectorAll('.tab-button');
         const viewportFrame = document.getElementById('viewportFrame');
         const openNewTab = document.getElementById('openNewTab');
         const reloadFrame = document.getElementById('reloadFrame');
 
-        // ── Load a design into the iframe ──
         function loadDesign(file) {
             if (!file) return;
-
-            // Update iframe source
             viewportFrame.src = file;
-
-            // Update "open in new tab" target
             openNewTab.href = file;
-
-            // Update active tab state
             tabButtons.forEach(function (btn) {
-                if (btn.dataset.file === file) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                btn.classList.toggle('active', btn.dataset.file === file);
             });
-
-            // Update URL hash so the selection is shareable/refresh-safe
             if (window.location.hash.replace('#', '') !== file) {
                 history.replaceState(null, '', '#' + file);
             }
         }
 
-        // ── Tab click handling ──
         tabButtons.forEach(function (btn) {
             btn.addEventListener('click', function () {
                 loadDesign(btn.dataset.file);
             });
         });
 
-        // ── Reload current design ──
         reloadFrame.addEventListener('click', function () {
             const currentSrc = viewportFrame.getAttribute('src');
-            if (currentSrc) {
-                // Force a reload by resetting src
-                viewportFrame.src = currentSrc;
-            }
+            if (currentSrc) viewportFrame.src = currentSrc;
         });
 
-        // ── Keyboard shortcuts: 1–4 to switch designs ──
+        // Number keys 1–N cycle through review designs first, then archive
         document.addEventListener('keydown', function (event) {
-            // Ignore if user is typing inside the iframe or a form field
-            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
-                return;
-            }
-
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
             const keyIndex = parseInt(event.key, 10);
             if (!isNaN(keyIndex) && keyIndex >= 1 && keyIndex <= tabButtons.length) {
                 const targetButton = tabButtons[keyIndex - 1];
-                if (targetButton) {
-                    loadDesign(targetButton.dataset.file);
-                }
+                if (targetButton) loadDesign(targetButton.dataset.file);
             }
         });
 
-        // ── Restore from URL hash on load ──
         (function init() {
             const hashFile = window.location.hash.replace('#', '');
             const validFiles = Array.from(tabButtons).map(function (btn) {
                 return btn.dataset.file;
             });
-
             if (hashFile && validFiles.indexOf(hashFile) !== -1) {
                 loadDesign(hashFile);
             }
