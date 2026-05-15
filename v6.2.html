@@ -302,28 +302,6 @@
 <div class="fold"></div>
 
 <!-- ============ DOCKED MASTHEAD (slides in on scroll) ============ -->
-<div class="dock" id="dock" aria-hidden="true">
-    <div class="dock-inner">
-        <span class="dock-left"><span class="pulse"></span><span class="label">Vol. I · No. 042 · Filed from Mestia</span></span>
-        <span class="dock-title">
-            Some
-            <span class="odd-mini-wrap" style="display:inline-flex;align-items:center;letter-spacing:-.02em">
-                <span class="odd-mini" aria-label="O">
-                    <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
-                        <use href="#road-stamp"/>
-                    </svg>
-                </span>dd
-            </span>
-            Road
-        </span>
-        <nav class="dock-nav">
-            <a href="#dispatch">Dispatch</a>
-            <a href="#ledger">Ledger</a>
-            <a href="#subscribe">Subscribe</a>
-        </nav>
-    </div>
-</div>
-
 <main class="shell">
 
     <!-- ============ MASTHEAD (page-top nameplate) ============ -->
@@ -552,14 +530,6 @@
         e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('on'); obs.unobserve(x.target); } });
     }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
-
-    // ===== Docked masthead on scroll =====
-    const dock = document.getElementById('dock');
-    const masthead = document.getElementById('masthead');
-    const dockObs = new IntersectionObserver(e => {
-        e.forEach(x => dock.classList.toggle('on', !x.isIntersecting && x.boundingClientRect.top < 0));
-    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-    dockObs.observe(masthead);
 
     // ===== Typewriter lead =====
     const tw = document.getElementById('typewriter');

@@ -25,7 +25,7 @@
         ::-webkit-scrollbar-thumb{background:var(--ink);border:2px solid var(--bone-dk);border-radius:0}
         ::-webkit-scrollbar-thumb:hover{background:var(--blood)}
         ::-webkit-scrollbar-corner{background:var(--bone-dk)}
-        body{background:var(--bone);color:var(--ink);font-family:var(--serif);font-weight:400;line-height:1.7;overflow-x:hidden;position:relative}
+        body{background:#ffffff;color:var(--ink);font-family:var(--serif);font-weight:400;line-height:1.7;overflow-x:hidden;position:relative}
         ::selection{background:var(--blood);color:var(--bone)}
         a{color:inherit;text-decoration:none}
         img{display:block;max-width:100%}
@@ -313,32 +313,6 @@
 <div class="fold"></div>
 
 <!-- ============ DOCKED MASTHEAD ============ -->
-<div class="dock" id="dock" aria-hidden="true">
-    <div class="dock-inner">
-        <span class="dock-left">
-            <span class="rec-chip"><span class="pulse"></span><span>REC</span></span>
-            <span class="label">Vol. I · No. 042 · <span class="rec-from">Filed from Mestia</span></span>
-        </span>
-        <span class="dock-title">
-            Some
-            <span style="display:inline-flex;align-items:center;letter-spacing:-.02em;margin:0 .04em">
-                <span class="o-mini" aria-label="O">
-                    <svg class="stamp-svg" viewBox="0 0 200 200" aria-hidden="true">
-                        <use href="#road-stamp"/>
-                    </svg>
-                </span>dd
-            </span>
-            Road
-        </span>
-        <nav class="dock-nav">
-            <span class="gps-chip">42°43′N · 42°44′E</span>
-            <a href="#dispatch">Dispatch</a>
-            <a href="#ledger">Ledger</a>
-            <a href="#subscribe">Subscribe</a>
-        </nav>
-    </div>
-</div>
-
 <main class="shell">
 
     <!-- ============ MASTHEAD ============ -->
@@ -589,14 +563,6 @@
         e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('on'); obs.unobserve(x.target); } });
     }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
-
-    // Docked masthead on scroll
-    const dock = document.getElementById('dock');
-    const masthead = document.getElementById('masthead');
-    const dockObs = new IntersectionObserver(e => {
-        e.forEach(x => dock.classList.toggle('on', !x.isIntersecting && x.boundingClientRect.top < 0));
-    }, { threshold: 0 });
-    dockObs.observe(masthead);
 
     // Typewriter lead
     const tw = document.getElementById('typewriter');
